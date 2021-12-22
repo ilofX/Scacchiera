@@ -3,4 +3,11 @@ project(Scacchiera)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Scacchiera main.cpp)
+include_directories(lib)
+
+add_library(tabellone lib/tabellone.h src/tabellone.cpp)
+
+add_executable(Scacchiera src/main.cpp)
+
+target_link_libraries(Scacchiera tabellone)
+
