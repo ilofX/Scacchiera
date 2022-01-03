@@ -1,0 +1,19 @@
+#ifndef KNIGHT_H
+#define KNIGHT_H
+
+#include "piece.h"
+
+class knight : public piece{
+	public:
+		knight(char name, short int c, short int r);
+		~knight();
+
+		knight(const knight& k);
+		knight& operator=(const knight& k);
+
+		knight(knight&& k);
+		night& operator=(knight&& k);
+
+		bool is_valid_final_pos(short int c, short int r);
+
+#endif
