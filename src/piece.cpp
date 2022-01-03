@@ -1,35 +1,44 @@
 #include "piece.h"
 
-piece::piece(char col, char r, char c){
-	color = col;
-	row = r;
-	column = c;
+piece::piece(char name, char r, char c) :piece_name{name}, row{r}, column{c}{}
+
+piece::piece(const piece& p) :piece_name{p.piece_name}, row{p.row},column{p.column}{}
+
+piece::piece(piece&& p) :piece_name{p.piece_name}, row{p.row}, column{p.column}{
+	p.piece_name = " ";
+	p.column = 0;
+	p.row = 0;
 }
 
-char piece::get_row(){
-	return row;
+piece& piece::operator=(const piece& p) :piece_name{p.piece_name}, row{p.row}, column{p.column}{
+	return *this;
 }
 
-char piece::get_column(){
-	return column;
+
+piece& piece::operator=(piece&& p) :piece_name{p.piece_name}, row{p.row}, column{p.column}{
+	p.piece_name = " ";
+	p.column = 0;
+	p.row = 0;
+
+	return *this;
 }
 
-char piece::set_row(short int r){
-	row = r;
+short int[] piece::get_position(){
+	short int r[2];
+	r[0] = column;
+	r[1] = row;
+	return r;
 }
 
-char piece::set_column(short int c){
-	column = c;
+void piece::set_position(short int r, short int c){
+	if(r <= 0 || r >= 8 || c <= 0 || c >= 8){
+		throw invalid_argument("Riga o colonna non valida!");
+	}else{
+		row = r;
+		column = c;
+	}
 }
 
-bool piece::is_same_color(const piece& p){
-	return ((this->color)==(p.color));
+string piece::to_string(){
+	return (string)this->piece_name;
 }
-
-piece::~piece(){
-
-}
-
-bool piece::is_valid_move(short int r, short int c){
-
-
