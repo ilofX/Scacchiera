@@ -35,7 +35,7 @@ class piece{
 		virtual ~piece() = 0;
 	private:
 		bool moved;
-		char piece_name; //il char permette anche la distinzione dei pezzi bianchi (lettere maiuscole) da quelli neri (lettere minuscole)
+		char piece_name; //il char permette anche la distinzione dei pezzi bianchi (lettere minuscole) da quelli neri (lettere maiuscole)
 		short int column;
 		short int row;
 };
