@@ -1,23 +1,34 @@
 #include "piece.h"
 
+using namespace std;
+
 piece::piece(char name, bool m, short int c, short int r) :piece_name{name}, moved{m}, column{c}, row{r}{}
 
 piece::piece(const piece& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{}
 
 piece::piece(piece&& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{
-	p.piece_name = " ";
+	p.piece_name = ' ';
 	p.moved = false;
 	p.column = 0;
 	p.row = 0;
 }
 
-piece& piece::operator=(const piece& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{
+piece& piece::operator=(const piece& p){
+	piece_name = p.piece_name;
+	moved = p.moved;
+	column = p.column;
+	row = p.row;
 	return *this;
 }
 
 
-piece& piece::operator=(piece&& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{
-	p.piece_name = " ";
+piece& piece::operator=(piece&& p){
+	piece_name = p.piece_name;
+	moved = p.moved;
+	column = p.column;
+	row = p.row;
+	
+	p.piece_name = ' ';
 	p.moved = false;
 	p.column = 0;
 	p.row = 0;
@@ -25,11 +36,12 @@ piece& piece::operator=(piece&& p) :piece_name{p.piece_name}, moved{p.moved}, co
 	return *this;
 }
 
-short int[] piece::get_position(){
-	short int r[2];
-	r[0] = column;
-	r[1] = row;
-	return r;
+short int piece::get_column(){
+	return column;
+}
+
+short int piece::get_row(){
+	return row;
 }
 
 void piece::set_position(short int r, short int c){
@@ -59,10 +71,10 @@ void piece::set_piece_name(char n){
 	if((n <= 104 && n >= 97) || (n <= 72 && n >= 65)){
 		piece_name = n;
 	}else{
-		piece_name = " ";
-	}	
+		piece_name = ' ';
+	}
 }
 
-string piece::to_string(){
-	return (string)this->piece_name;
+char piece::to_string(){
+	return piece_name;
 }
