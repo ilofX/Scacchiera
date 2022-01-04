@@ -3,7 +3,10 @@
 
 #include <string>
 #include <stdexcept>
-#include <math>
+#include <cmath>
+#include <vector>
+
+using namespace std;
 
 class piece{
 	public:
@@ -14,8 +17,9 @@ class piece{
 
 		piece& operator=(const piece& p); //assegnamento copia
 		piece& operator=(piece&& p); //assegnamento di spostamkento
-
-		short int[] get_position(); //il primo numero è l'indice colonna, il secondo quello riga
+		
+		short int get_column();
+		short int get_row();
 		void set_position(short int c, short int r);
 
 		bool is_moved();
@@ -26,7 +30,7 @@ class piece{
 
 		virtual bool is_valid_final_pos(short int c, short int r) = 0;
 
-		string to_string();
+		char to_string();
 
 		virtual ~piece() = 0;
 	private:
@@ -34,6 +38,6 @@ class piece{
 		char piece_name; //il char permette anche la distinzione dei pezzi bianchi (lettere maiuscole) da quelli neri (lettere minuscole)
 		short int column;
 		short int row;
-}
+};
 
 #endif
