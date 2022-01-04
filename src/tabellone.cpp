@@ -1,5 +1,5 @@
 //
-// Created by filip on 22/12/2021.
+// Created by Filippo Stella 2052644 on 22/12/2021.
 //
 
 #include "tabellone.h"

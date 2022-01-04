@@ -16,9 +16,9 @@ public:
     //tabellone(Giocatore& whitePLayer, Giocatore& blackPlayer);
 
     //Copy Constructor
-    tabellone(const tabellone& tab);
+    tabellone(const tabellone& tab) = delete;
     //Copy Assignment
-    tabellone& operator=(const tabellone& tab);
+    tabellone& operator=(const tabellone& tab) = delete;
 
     //Move Constructor
     tabellone(tabellone&& tab);
