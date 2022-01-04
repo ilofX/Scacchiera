@@ -4,7 +4,6 @@
 #include <string>
 #include <stdexcept>
 #include <cmath>
-#include <vector>
 
 using namespace std;
 
