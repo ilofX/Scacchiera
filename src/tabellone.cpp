@@ -14,11 +14,11 @@ std::string tabellone::move(char startColumn, char startRow, char endColumn, cha
 std::string tabellone::print() {
     std::string ris;
     char matr[8][8] {' '};
-    for(auto blackPiece=blackPieces.begin();blackPiece!=blackPieces.end();blackPiece++){
-        matr[blackPiece->get_column()][blackPiece->get_row()]=blackPiece->get_piece_name();
+    for(auto blackPiece=blackPieces.begin();blackPiece!=blackPieces.end();blackPiece++) {
+        matr[(*blackPiece)->get_column()][(*blackPiece)->get_row()] = (*blackPiece)->get_piece_name();
     }
     for(auto whitePiece=whitePieces.begin();whitePiece!=whitePieces.end();whitePiece++){
-        matr[whitePiece->get_column()][whitePiece->get_row()]=whitePiece->get_piece_name();
+        matr[(*whitePiece)->get_column()][(*whitePiece)->get_row()] = (*whitePiece)->get_piece_name();
     }
     for(int i=8; i>0; i--){
         ris+=to_string(i)+" ";
@@ -46,7 +46,7 @@ bool tabellone::isTie() const {
     return false;
 }
 
-bool tabellone::isCheckmate(const piece &king) const {
+bool tabellone::isCheckmate(const shared_ptr<piece> king) const {
     return false;
 }
 
@@ -66,24 +66,30 @@ bool tabellone::canMove(piece& piece) const {
     return false;
 }
 
-const piece& tabellone::getKing(bool isBlack) const {
+const shared_ptr<piece> tabellone::getKing(bool isBlack) const {
     if(isBlack){
-        auto iter = std::find_if(blackPieces.begin(),blackPieces.end(),findKing('K'));
-        if(iter!=blackPieces.end()) return *iter;
+        for (auto iter = blackPieces.begin(); iter!=blackPieces.end(); iter++){
+            if((*iter)->get_piece_name()=='K') return *iter;
+        }
         throw InvalidStateException();
     }
     else{
-        auto iter = std::find_if(whitePieces.begin(),whitePieces.end(),findKing('k'));
-        if(iter!=whitePieces.end()) return *iter;
+        for (auto iter = whitePieces.begin(); iter!=whitePieces.end(); iter++){
+            if((*iter)->get_piece_name()=='k') return *iter;
+        }
         throw InvalidStateException();
     }
 }
 
-const piece &tabellone::getPiece(char column, char row) {
-    auto iter = std::find_if(whitePieces.begin(),whitePieces.end(),findPiece(column,row));
-    if(iter!=whitePieces.end()) return *iter;
-    iter = std::find_if(blackPieces.begin(),blackPieces.end(),findPiece(column,row));
-    if(iter!=blackPieces.end()) return *iter;
+const shared_ptr<piece> tabellone::getPiece(char column, char row) {
+    if(column>8 || row>8) throw IllegalCoordinatesException();
+
+    for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
+        if(((*iterB)->get_column()== column) && ((*iterB)->get_row() == row)) return *iterB;
+        if(((*iterW)->get_column() == column) && ((*iterW)->get_row() == row)) return *iterW;
+        if(iterB != blackPieces.end()) iterB++;
+        if(iterW != whitePieces.end()) iterW++;
+    }
 
     throw IllegalCoordinatesException();
 }

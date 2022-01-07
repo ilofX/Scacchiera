@@ -24,7 +24,7 @@ class piece{
 		bool is_moved();
 		void set_moved(bool m);
 
-		char get_piece_name();
+		char get_piece_name() const;
 		void set_piece_name(char n);
 
 		virtual bool is_valid_final_pos(short int c, short int r) = 0;

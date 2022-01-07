@@ -63,7 +63,7 @@ void piece::set_moved(bool m){
 	}
 }
 
-char piece::get_piece_name(){
+char piece::get_piece_name() const{
 	return piece_name;
 }
 
