@@ -9,8 +9,9 @@
 #include <list>
 #include <vector>
 #include <algorithm>
-#include "piece.h"
 #include <memory>
+#include "piece.h"
+
 
 class tabellone{
 public:
