@@ -15,7 +15,8 @@
 
 class tabellone{
 public:
-    tabellone();
+    tabellone(){};
+    //tabellone() = delete;
     //tabellone(Giocatore& whitePLayer, Giocatore& blackPlayer);
 
     //Copy Constructor
@@ -37,23 +38,26 @@ public:
     class PromotionException: public std::exception{};
 
     bool hasNextMove() const;
-    std::string move(char startColumn, char startRow, char endColumn, char endRow);
-    std::string promotion(char Column, char Row, char piece);
+    void move(char startColumn, char startRow, char endColumn, char endRow);
+    std::shared_ptr<piece> promotion(char Column, char Row, char piece);
 
 private:
     std::string print();
-    const shared_ptr<piece> getKing(bool isBlack) const;
-    const shared_ptr<piece> getPiece(char column, char row);
-    bool canMove(piece& piece) const;
+    std::string printHistory();
+    shared_ptr<piece> getKing(bool isBlack) const;
+    shared_ptr<piece> getPiece(char column, char row);
+    bool canMove(shared_ptr<piece>) const;
     bool isCheck(char column, char row) const;
     bool isCheckmate(const shared_ptr<piece> king) const;
     bool isTie() const;
-    bool removePiece(char column, char row);
+    void removePiece(char column, char row);
+    void removePiece(const std::shared_ptr<piece>& removePiece);
     void deleteHistory();
 
     //Giocatore& whitePlayer, blackPlayer;
     std::list<std::shared_ptr<piece>> whitePieces, blackPieces;
     std::vector<std::string> history;
+    //std::vector<std::vector<std::shared_ptr<piece>>> board;
     int turn=-1;
 };
 

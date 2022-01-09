@@ -2,45 +2,50 @@
 
 using namespace std;
 
-piece::piece(char name, bool m, short int c, short int r) :piece_name{name}, moved{m}, column{c}, row{r}{}
+piece::piece(char name, short int c, short int r) :piece_name{name}, moves{0}, last_moved{0}, column{c}, row{r}{}
 
-piece::piece(const piece& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{}
+piece::piece(char name, short int c, short int r, int moves, int last_moved) :piece_name{name}, moves{moves}, last_moved{last_moved}, column{c}, row{r}{}
 
-piece::piece(piece&& p) :piece_name{p.piece_name}, moved{p.moved}, column{p.column}, row{p.row}{
+piece::piece(const piece& p) :piece_name{p.piece_name}, moves{p.moves}, last_moved{p.last_moved}, column{p.column}, row{p.row}{}
+
+piece::piece(piece&& p) :piece_name{p.piece_name}, moves{p.moves}, last_moved{p.last_moved}, column{p.column}, row{p.row}{
 	p.piece_name = ' ';
-	p.moved = false;
+	p.moves = 0;
+    p.last_moved = 0;
 	p.column = 0;
 	p.row = 0;
 }
 
 piece& piece::operator=(const piece& p){
 	piece_name = p.piece_name;
-	moved = p.moved;
+	moves = p.moves;
+    last_moved = p.last_moved;
 	column = p.column;
 	row = p.row;
 	return *this;
 }
 
-
 piece& piece::operator=(piece&& p){
 	piece_name = p.piece_name;
-	moved = p.moved;
+	moves = p.moves;
+    last_moved = p.last_moved;
 	column = p.column;
 	row = p.row;
 	
 	p.piece_name = ' ';
-	p.moved = false;
+	p.moves = 0;
+    p.last_moved = 0;
 	p.column = 0;
 	p.row = 0;
 
 	return *this;
 }
 
-short int piece::get_column(){
+short int piece::get_column() const{
 	return column;
 }
 
-short int piece::get_row(){
+short int piece::get_row() const{
 	return row;
 }
 
@@ -53,14 +58,13 @@ void piece::set_position(short int r, short int c){
 	}
 }
 
-bool piece::is_moved(){
-	return moved;
+bool piece::is_moved() const{
+	return moves>0;
 }
 
-void piece::set_moved(bool m){
-	if(m == true){
-		moved = m;
-	}
+void piece::increment_move(int turn){
+    moves++;
+    last_moved = turn;
 }
 
 char piece::get_piece_name() const{
@@ -75,6 +79,10 @@ void piece::set_piece_name(char n){
 	}
 }
 
-char piece::to_string(){
-	return piece_name;
+int piece::get_moves() const {
+    return moves;
+}
+
+int piece::get_last_moved() const {
+    return last_moved;
 }
