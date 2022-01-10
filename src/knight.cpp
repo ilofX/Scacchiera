@@ -1,6 +1,8 @@
 #include "knight.h"
 
-knight::knight(char name, bool m, short int c, short int r) : piece(name, m, r, c){}
+knight::knight(char name, short int c, short int r) : piece(name, r, c){}
+
+knight::knight(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
 knight::knight(const knight& k) : piece(k){}
 

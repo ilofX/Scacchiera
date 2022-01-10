@@ -6,6 +6,7 @@
 class queen : public piece{
 	public:
 		queen(char name, bool m, short int c, short int r);
+		queen(char name, bool m, short int c, short int r, int m, int lm);
 		~queen();
 
 		queen(const queen& k);

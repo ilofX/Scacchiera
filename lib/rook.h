@@ -6,6 +6,7 @@
 class rook : public piece{
 	public:
 		rook(char name, bool m, short int c, short int r);
+		rook(char name, bool m, short int c, short int r, int m, int lm);
 		~rook();
 
 		rook(const rook& k);

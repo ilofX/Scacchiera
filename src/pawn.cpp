@@ -1,6 +1,8 @@
 #include "pawn.h"
 
-pawn::pawn(char name, bool m, short int c, short int r) : piece(name, m, r, c){}
+pawn::pawn(char name, short int c, short int r) : piece(name, r, c){}
+
+pawn::pawn(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
 //pawn::pawn(const pawn& k) : piece(k){}
 

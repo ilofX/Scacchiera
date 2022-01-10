@@ -6,6 +6,7 @@
 class pawn : public piece{
 	public:
 		pawn(char name, bool m, short int c, short int r);
+		pawn(char name, bool m, short int c, short int r, int m, int lm);
 		~pawn();
 
 		pawn(const pawn& k);

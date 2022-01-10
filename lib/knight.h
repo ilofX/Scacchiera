@@ -6,6 +6,7 @@
 class knight : public piece{
 	public:
 		knight(char name, bool m, short int c, short int r);
+		knight(char name, bool m, short int c, short int r, int m, int lm);
 		~knight();
 
 		knight(const knight& k);

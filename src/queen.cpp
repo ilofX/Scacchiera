@@ -1,6 +1,8 @@
 #include "queen.h"
 
-queen::queen(char name, bool m, short int c, short int r) : piece(name, m, r, c){}
+queen::queen(char name, short int c, short int r) : piece(name, r, c){}
+
+queen::queen(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
 queen::queen(const queen& k) : piece(k){}
 

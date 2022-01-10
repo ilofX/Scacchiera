@@ -10,14 +10,14 @@ using namespace std;
 class piece{
 	public:
 		piece(char name, short int c, short int r);
-        piece(char name, short int c, short int r, int moves, int last_moved);
+        piece(char name, short int c, short int r, int m, int lm);
 
 		piece(const piece& p); //costruttore copia
 		piece(piece&& p); //costruttore spostamento
 
 		piece& operator=(const piece& p); //assegnamento copia
 		piece& operator=(piece&& p); //assegnamento di spostamkento
-		
+
 		short int get_column() const;
 		short int get_row() const;
         int get_moves() const;

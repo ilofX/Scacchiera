@@ -1,6 +1,8 @@
 #include "king.h"
 
-king::king(char name, bool m, short int c, short int r) : piece(name, m, r, c){}
+king::king(char name, short int c, short int r) : piece(name, r, c){}
+
+king::king(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
 king::king(const king& k) : piece(k){}
 

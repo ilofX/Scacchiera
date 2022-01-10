@@ -6,6 +6,7 @@
 class king : public piece{
 	public:
 		king(char name, bool m, short int c, short int r);
+		king(char name, bool m, short int c, short int r, int m, int lm);
 		~king();
 
 		king(const king& k);
