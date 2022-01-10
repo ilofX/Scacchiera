@@ -2,9 +2,9 @@
 
 pawn::pawn(char name, bool m, short int c, short int r) : piece(name, m, r, c){}
 
-pawn::pawn(const pawn& k) : piece(k){}
+//pawn::pawn(const pawn& k) : piece(k){}
 
-pawn::pawn(pawn&& k) : piece(k){}
+//pawn::pawn(pawn&& k) : piece(k){}
 
 //pawn& pawn::operator=(const pawn& k) : piece(k){}
 
@@ -22,4 +22,4 @@ bool pawn::is_valid_final_pos(short int c, short int r){
 	}
     return false;
 }
-		
+
