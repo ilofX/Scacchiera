@@ -1,9 +1,9 @@
 #include "player.h"
 
-player::player(char c, const tabellone& s){
-	scacchiera = s;
+player::player(char n, tabellone& t){
+	scacchiera = t;
 	if(n == 'b' || n == 'w' || n == 'B' || n == 'W'){
-		color = c;
+		color = n;
 	}else{
 		throw std::invalid_argument("Sono validi solo i colori b, w o B, W");
 	}
@@ -47,14 +47,14 @@ bool is_display_input(string s){
 }
 
 vector<short int> player::convert_input(string s){ //il vettore tornato contiene [stat_col, start_row, end_col, end_row]
-	if(is_valid_input(s) && !is-display-input(s)){
-		short int start_col = (short int)tolower((int)s[0]) - 64
-		short int start_row = (short int)s[1] - 48;
-		short int end_col = (short int)tolower((int)s[3]) - 64
-		short int end_row = (short int)s[4] - 48;
+	vector<short int> ret;
 
-		vector<short int> ret (start_col, start_row, end_col, end_row);
-	}
+	if(is_valid_input(s) && !is_display_input(s)){
+		ret.push_back((short int)tolower((int)s[0]) - 64);
+		ret.push_back((short int)s[1] - 48);
+		ret.push_back((short int)tolower((int)s[2]) - 64);
+		ret.push_back((short int)s[3] - 48);
+    }
 
 	return ret;
 }

@@ -5,7 +5,7 @@
 
 class human : public player{
 	public:
-		human(char n);
+		human(char n, const tabellone& t);
 
 		//human(const human& h);
 		//human(human&& h);

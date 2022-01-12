@@ -2,13 +2,15 @@
 #define PLAYER_H
 
 #include <vector>
+#include <string>
+#include <cstdlib>
 #include "tabellone.h"
 
 using namespace std;
 
 class player{
 	public:
-		player(char c, const tabellone& s);
+		player(char n, const tabellone& t);
 
 		//player(const player& p);
 		//player(player&& p);
@@ -27,7 +29,7 @@ class player{
 		//virtual ~player();
 	private:
 		char color;
-		tabellone scacchiera;
+		tabellone& scacchiera;
 };
 
 #endif
