@@ -248,19 +248,19 @@ std::shared_ptr<piece> tabellone::promotion(short int column, short int row, cha
     switch (pieceName) {
         case 'D':
         case 'd':
-            piece.reset(new queen(pieceName,true,piece->get_column(),piece->get_row()));
+            piece.reset(new queen(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
             break;
         case 'T':
         case 't':
-            piece.reset(new rook(pieceName,true,piece->get_column(),piece->get_row()));
+            piece.reset(new rook(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
             break;
         case 'A':
         case 'a':
-            piece.reset(new bishop(pieceName,true,piece->get_column(),piece->get_row()));
+            piece.reset(new bishop(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
             break;
         case 'C':
         case 'c':
-            piece.reset(new knight(pieceName,true,piece->get_column(),piece->get_row()));
+            piece.reset(new knight(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
             break;
         default:
             throw InvalidStateException();
