@@ -6,7 +6,7 @@ piece::piece(char name, short int c, short int r) :piece_name{name}, moves{0}, l
 
 piece::piece(char name, short int c, short int r, int moves, int last_moved) :piece_name{name}, moves{moves}, last_moved{last_moved}, column{c}, row{r}{}
 
-piece::piece(const piece& p) :piece_name{p.piece_name}, moves{p.moves}, last_moved{p.last_moved}, column{p.column}, row{p.row}{}
+/*piece::piece(const piece& p) :piece_name{p.piece_name}, moves{p.moves}, last_moved{p.last_moved}, column{p.column}, row{p.row}{}
 
 piece::piece(piece&& p) :piece_name{p.piece_name}, moves{p.moves}, last_moved{p.last_moved}, column{p.column}, row{p.row}{
 	p.piece_name = ' ';
@@ -31,7 +31,7 @@ piece& piece::operator=(piece&& p){
     last_moved = p.last_moved;
 	column = p.column;
 	row = p.row;
-	
+
 	p.piece_name = ' ';
 	p.moves = 0;
     p.last_moved = 0;
@@ -40,6 +40,8 @@ piece& piece::operator=(piece&& p){
 
 	return *this;
 }
+
+*/
 
 short int piece::get_column() const{
 	return column;

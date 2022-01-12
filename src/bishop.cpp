@@ -4,9 +4,9 @@ bishop::bishop(char name, short int c, short int r) : piece(name, r, c){}
 
 bishop::bishop(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
-bishop::bishop(const bishop& k) : piece(k){}
+//bishop::bishop(const bishop& k) : piece(k){}
 
-bishop::bishop(bishop&& k) : piece(k){}
+//bishop::bishop(bishop&& k) : piece(k){}
 
 //bishop& bishop::operator=(const bishop& k) : piece(k){}
 

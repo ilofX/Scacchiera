@@ -4,9 +4,9 @@ rook::rook(char name, short int c, short int r) : piece(name, r, c){}
 
 rook::rook(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
 
-rook::rook(const rook& k) : piece(k){}
+//rook::rook(const rook& k) : piece(k){}
 
-rook::rook(rook&& k) : piece(k){}
+//rook::rook(rook&& k) : piece(k){}
 
 //rook& rook::operator=(const rook& k) : piece(k){}
 
