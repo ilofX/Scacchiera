@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Build-Directory
+/cmake-build-debug-mingw/
+
+# JetBrains Enviroment Folder
+/.idea/
