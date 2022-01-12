@@ -12,13 +12,15 @@ class computer : public player{
 
 		//computer& operator=(const computer& h);
 		//computer& operator=(computer&& h);
-		
-		piece get_random_piece();
-		
-		short int get_random_col(const piece& p);	
-		short int get_random_row(const piece& p);	
 
-		bool move(short int sc, short int sr, short int ec, short int er);
+		piece get_random_piece();
+
+		//bool is_ranndom_move_valid();
+
+		short int get_random_col(const piece& p);
+		short int get_random_row(const piece& p);
+
+		bool move(string s);
 
 		//~computer();
 };

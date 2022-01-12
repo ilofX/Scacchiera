@@ -5,7 +5,7 @@
 
 class human : public player{
 	public:
-		human(string n);
+		human(char n);
 
 		//human(const human& h);
 		//human(human&& h);
@@ -13,7 +13,7 @@ class human : public player{
 		//human& operator=(const human& h);
 		//human& operator=(human&& h);
 
-		bool move(short int sc, short int sr, short int ec, short int er);
+		bool move(string s);
 
 		//~human();
 };
