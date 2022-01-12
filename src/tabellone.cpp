@@ -2,7 +2,6 @@
 // Created by Filippo Stella 2052644 on 22/12/2021.
 //
 
-#include <iostream>
 #include <algorithm>
 #include "tabellone.h"
 #include "piece.h"
@@ -14,7 +13,7 @@
 #include "rook.h"
 
 
-void tabellone::move(char startColumn, char startRow, char endColumn, char endRow) {
+void tabellone::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
     if(startPiece==nullptr) throw IllegalCoordinatesException();
     if(!startPiece->is_valid_final_pos(endColumn,endRow)) throw IllegalCoordinatesException();
@@ -43,6 +42,7 @@ void tabellone::move(char startColumn, char startRow, char endColumn, char endRo
                     throw PromotionException();
                 }
             }
+            tieMoves=-1;
             break;
 
         case 'T':
@@ -76,26 +76,139 @@ void tabellone::move(char startColumn, char startRow, char endColumn, char endRo
                 }
             }
 
-            if(isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name())) throw IllegalMoveException();
-            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);
-            break;
-
-        case 'C':
-        case 'c':   //Standard movement only
             if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
             if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);
             break;
 
+        case 'C':
+        case 'c':
+            if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
+            break;
+
         case 'A':
         case 'a':
-
+            if(endRow>startRow){   //Top Movement
+                if(endColumn>startColumn){   //Top-Right Movement
+                    for(int i=0;i<(endRow-startRow)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Top-Left Movement
+                    for(int i=0;i<(endRow-startRow)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
+            else{   //Bottom Movement
+                if(endColumn>startColumn){   //Bottom-Right Movement
+                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Bottom-Left Movement
+                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
+            if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
             break;
+
         case 'D':
         case 'd':
+            if(endColumn!=startColumn && startRow==endRow) { //Horizontal Movement
+                if (endColumn > startColumn) { //Horizontal-Right movement
+                    for (char i=startColumn; i<endColumn; i++) {
+                        shared_ptr<piece> currentPiece = getPiece(i, startRow);
+                        if (currentPiece != nullptr) throw IllegalMoveException();
+                    }
+                }
+                else {  //Horizontal-Left movement
+                    for (char i=startColumn; i>endColumn; i--) {
+                        shared_ptr<piece> currentPiece = getPiece( i, startRow);
+                        if (currentPiece != nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
+            else if(endColumn==startColumn && endRow!=startRow){ //Vertical Movement
+                if(endRow>startRow) { //Vertical-Top movement
+                    for (char i = startRow; i<endRow; i++) {
+                        shared_ptr<piece> currentPiece = getPiece(startColumn, i);
+                        if (currentPiece != nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Vertical-Down movement
+                    for (char i = startRow; i>endRow; i--) {
+                        shared_ptr<piece> currentPiece = getPiece(startColumn, i);
+                        if (currentPiece != nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
+            else if(endRow>startRow){   //Top Movement
+                if(endColumn>startColumn){   //Top-Right Movement
+                    for(int i=0;i<(endRow-startRow)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Top-Left Movement
+                    for(int i=0;i<(endRow-startRow)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
+            else{   //Bottom Movement
+                if(endColumn>startColumn){   //Bottom-Right Movement
+                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Bottom-Left Movement
+                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+            }
 
+            if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
             break;
+
         case 'R':
         case 'r':
+            if(startRow==endRow && endColumn-startColumn==2){   //Arrocco Lungo(Left)
+                shared_ptr<piece> rightRook = getPiece(8,(startPiece->get_piece_name()>97) ? 1 : 8);
+                if(startPiece->is_moved()) throw IllegalMoveException();
+                if(rightRook!= nullptr && rightRook->is_moved()) throw IllegalMoveException();
+                for(short int i=startColumn;i<rightRook->get_column();i++){
+                    shared_ptr<piece> currPiece = getPiece(i,startRow);
+                    if(currPiece!= nullptr) throw IllegalMoveException();
+                }
+                rightRook->set_position(endColumn-1,startRow);
+            }
+            else if(startRow==endRow && startColumn-endColumn==2){ //Arrocco Corto(Right)
+                shared_ptr<piece> leftRook = getPiece(1,(startPiece->get_piece_name()>97) ? 1 : 8);
+                if(startPiece->is_moved()) throw IllegalMoveException();
+                if(leftRook!= nullptr && leftRook->is_moved()) throw IllegalMoveException();
+                for(short int i=startColumn;i<leftRook->get_column();i++){
+                    shared_ptr<piece> currPiece = getPiece(i,startRow);
+                    if(currPiece!= nullptr) throw IllegalMoveException();
+                }
+                leftRook->set_position(endColumn-1,startRow);
+            }
+            else{   //Standard Movement
+                if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
+                if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);
+            }
 
             break;
         default:
@@ -105,6 +218,7 @@ void tabellone::move(char startColumn, char startRow, char endColumn, char endRo
     startPiece->increment_move(turn);
     history.push_back(printHistory());
     turn++;
+    tieMoves++;
 }
 
 std::string tabellone::print() {
@@ -128,7 +242,7 @@ std::string tabellone::print() {
 }
 
 //Da modificare dopo adeguamento costruttori classi derivate di piece
-std::shared_ptr<piece> tabellone::promotion(char column, char row, char pieceName) {
+std::shared_ptr<piece> tabellone::promotion(short int column, short int row, char pieceName) {
     shared_ptr<piece> piece = getPiece(column,row);
     if(piece->get_piece_name()!='P' || piece->get_piece_name()!='p') throw IllegalMoveException();
     switch (pieceName) {
@@ -156,25 +270,32 @@ std::shared_ptr<piece> tabellone::promotion(char column, char row, char pieceNam
 }
 
 bool tabellone::hasNextMove() const {
-    if(isTie()) throw MatchTiedException();
-    if(isCheckmate(getKing(false))) throw CheckmateException();
-    if(isCheckmate(getKing(true))) throw CheckmateException();
+    std::vector<std::vector<shared_ptr<piece>>> board;
+
+
+
+    if(isTie(board)) throw MatchTiedException();
+    if(isCheckmate(getKing(false),board)) throw CheckmateException();
+    if(isCheckmate(getKing(true),board)) throw CheckmateException();
     return true;
 }
 
-bool tabellone::isTie() const {
+bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
+    if(tieMoves>=50) return true;   //50 moves without moving pawns ore removing pieces
+    if(std::count(history.begin(),history.end(),printHistory())>=3) return true; //same situation of the board for three times or more
+
     return false;
 }
 
-bool tabellone::isCheckmate(const shared_ptr<piece> king) const {
+bool tabellone::isCheckmate(const shared_ptr<piece>& king, std::vector<std::vector<shared_ptr<piece>>> &board) const {
     return false;
 }
 
-bool tabellone::isCheck(char column, char row) const {
+bool tabellone::isCheck(short int column, short int row, char pieceName, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
     return false;
 }
 
-void tabellone::removePiece(char column, char row){
+void tabellone::removePiece(short int column, short int row){
     shared_ptr<piece> piece = getPiece(column,row);
     if(piece->get_piece_name()>97){
         whitePieces.remove(piece);
@@ -183,6 +304,7 @@ void tabellone::removePiece(char column, char row){
         blackPieces.remove(piece);
     }
     deleteHistory();
+    tieMoves=-1;
 }
 
 void tabellone::removePiece(const std::shared_ptr<piece>& removePiece){
@@ -199,7 +321,7 @@ void tabellone::deleteHistory() {
     history.clear();
 }
 
-std::string tabellone::printHistory() {
+std::string tabellone::printHistory() const{
     std::string ris;
     for(const auto& piece : whitePieces){
         ris+=to_string(piece->get_piece_name())+ to_string(piece->get_column())+ to_string(piece->get_row());
@@ -229,7 +351,7 @@ shared_ptr<piece> tabellone::getKing(bool isBlack) const {
     }
 }
 
-shared_ptr<piece> tabellone::getPiece(char column, char row) {
+shared_ptr<piece> tabellone::getPiece(short int column, short int row) {
     if(column>8 || row>8) throw IllegalCoordinatesException();
 
     for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
@@ -241,3 +363,11 @@ shared_ptr<piece> tabellone::getPiece(char column, char row) {
 
     return nullptr;
 }
+
+std::vector<shared_ptr<piece>> tabellone::getPieces(bool isBlackPieces) const {
+    std::vector<shared_ptr<piece>> ris;
+    if(isBlackPieces)   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
+    else std::copy(whitePieces.begin(),whitePieces.end(), ris.begin());
+    return ris;
+}
+

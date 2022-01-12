@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tabellone.h"
+#include "player.h"
 
 int main() {
     tabellone board;
