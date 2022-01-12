@@ -1,6 +1,6 @@
 #include "human.h"
 
-human::human(char c) : player(c) {}
+human::human(char n, const tabellone& t) : player(n, t) {}
 
 bool human::move(string s){
     bool flag = false;
