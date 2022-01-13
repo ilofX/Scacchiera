@@ -15,8 +15,7 @@
 
 class tabellone{
 public:
-    tabellone(){};
-    //tabellone();
+    tabellone();
 
     //Copy Constructor
     tabellone(const tabellone& tab) = delete;
@@ -40,10 +39,10 @@ public:
     void move(short int startColumn, short int startRow, short int endColumn, short int endRow);
     std::shared_ptr<piece> promotion(short int Column, short int Row, char piece);
     std::vector<shared_ptr<piece>> getPieces(bool isBlackPieces) const;
+    std::string print();
 
 
 private:
-    std::string print();
     std::string printHistory() const;
     shared_ptr<piece> getKing(bool isBlack) const;
     shared_ptr<piece> getPiece(short int column, short int row);
@@ -51,7 +50,6 @@ private:
     bool isCheck(short int column, short int row, char pieceName, std::vector<std::vector<std::shared_ptr<piece>>> &board) const;
     bool isCheckmate(const shared_ptr<piece> &king, std::vector<std::vector<shared_ptr<piece>>> &board) const;
     bool isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const;
-    void removePiece(short int column, short int row);
     void removePiece(const std::shared_ptr<piece>& removePiece);
     void deleteHistory();
 

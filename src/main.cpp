@@ -3,7 +3,7 @@
 #include "player.h"
 
 int main() {
-    tabellone board;
+    tabellone board = tabellone();
 
     try {
         while (board.hasNextMove()) {

@@ -1,5 +1,5 @@
-#ifndef QUEEN_H
-#define QUEEN_H
+#ifndef KING_H
+#define KING_H
 
 #include "piece.h"
 
@@ -17,4 +17,5 @@ class king : public piece{
 
 		bool is_valid_final_pos(short int c, short int r);
 };
+
 #endif

@@ -1,4 +1,5 @@
 #include "human.h"
+#include "piece.h"
 
 human::human(char n, const tabellone& t) : player(n, t) {}
 

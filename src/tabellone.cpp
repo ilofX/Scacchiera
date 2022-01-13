@@ -6,12 +6,41 @@
 #include "tabellone.h"
 #include "piece.h"
 #include "queen.h"
-#include "king.h"
 #include "bishop.h"
 #include "knight.h"
 #include "pawn.h"
 #include "rook.h"
+#include "king.h"
 
+tabellone::tabellone() {
+    turn=0;
+    tieMoves=0;
+    history = std::vector<std::string>();
+    //Generating White Pieces
+    whitePieces.push_back(std::shared_ptr<piece>{new king('r',4,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new queen('d',5,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',1,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',8,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',2,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',7,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',3,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',6,1)});
+    //Generating Black Pieces
+    blackPieces.push_back(std::shared_ptr<piece>{new king('R',4,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new queen('D',5,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',1,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',8,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',2,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',7,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',3,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',6,8)});
+    //Generating Pawns
+    for(int i=1;i<=8;i++){
+        whitePieces.push_back(std::shared_ptr<piece>{new pawn('p',i,2)});
+        blackPieces.push_back(std::shared_ptr<piece>{new pawn('P',i,7)});
+    }
+    history.push_back(printHistory());
+}
 
 void tabellone::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
@@ -271,8 +300,7 @@ std::shared_ptr<piece> tabellone::promotion(short int column, short int row, cha
 
 bool tabellone::hasNextMove() const {
     std::vector<std::vector<shared_ptr<piece>>> board;
-
-
+    //Generate board for next check
 
     if(isTie(board)) throw MatchTiedException();
     if(isCheckmate(getKing(false),board)) throw CheckmateException();
@@ -283,7 +311,9 @@ bool tabellone::hasNextMove() const {
 bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
     if(tieMoves>=50) return true;   //50 moves without moving pawns ore removing pieces
     if(std::count(history.begin(),history.end(),printHistory())>=3) return true; //same situation of the board for three times or more
-
+    if((whitePieces.size()<3 && blackPieces.size()<2) || (blackPieces.size()<3 && whitePieces.size()<2)) return true; //insufficient pieces
+    //no available moves
+    //requested tie
     return false;
 }
 
@@ -293,18 +323,6 @@ bool tabellone::isCheckmate(const shared_ptr<piece>& king, std::vector<std::vect
 
 bool tabellone::isCheck(short int column, short int row, char pieceName, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
     return false;
-}
-
-void tabellone::removePiece(short int column, short int row){
-    shared_ptr<piece> piece = getPiece(column,row);
-    if(piece->get_piece_name()>97){
-        whitePieces.remove(piece);
-    }
-    else{
-        blackPieces.remove(piece);
-    }
-    deleteHistory();
-    tieMoves=-1;
 }
 
 void tabellone::removePiece(const std::shared_ptr<piece>& removePiece){

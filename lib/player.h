@@ -26,8 +26,10 @@ class player{
 
 		vector<short int> convert_input(string s);
 
+        class InvalidMoveException : public std::exception{};
+
 		//virtual ~player();
-	private:
+	protected:
 		char color;
 		tabellone& scacchiera;
 };
