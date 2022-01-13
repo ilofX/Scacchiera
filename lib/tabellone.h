@@ -40,13 +40,14 @@ public:
     std::shared_ptr<piece> promotion(short int Column, short int Row, char piece);
     std::vector<shared_ptr<piece>> getPieces(bool isBlackPieces) const;
     std::string print();
+    bool solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow);
 
 
 private:
     std::string printHistory() const;
     shared_ptr<piece> getKing(bool isBlack) const;
     shared_ptr<piece> getPiece(short int column, short int row);
-    bool canMove(shared_ptr<piece>) const;
+    bool canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const;
     bool isCheck(short int column, short int row, char pieceName, std::vector<std::vector<std::shared_ptr<piece>>> &board) const;
     bool isCheckmate(const shared_ptr<piece> &king, std::vector<std::vector<shared_ptr<piece>>> &board) const;
     bool isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const;
@@ -54,6 +55,7 @@ private:
     void deleteHistory();
 
     std::list<std::shared_ptr<piece>> whitePieces, blackPieces;
+    std::shared_ptr<piece> checkedPiece= nullptr, checkIssuerPiece= nullptr;
     std::vector<std::string> history;
     int turn=0, tieMoves=0;
 };

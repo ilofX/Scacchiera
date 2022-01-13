@@ -18,7 +18,12 @@ int main() {
 
             }
             catch (tabellone::CheckException &ex) {
-
+                try { //Attempt possible solution
+                    //move(startColumn, startRow, endColumn, endRow);
+                }
+                catch(tabellone::IllegalMoveException& ex){
+                    return false;
+                }
             }
             catch (tabellone::PromotionException &ex) {
 

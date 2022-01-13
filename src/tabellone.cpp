@@ -42,6 +42,8 @@ tabellone::tabellone() {
     history.push_back(printHistory());
 }
 
+
+
 void tabellone::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
     if(startPiece==nullptr) throw IllegalCoordinatesException();
@@ -270,7 +272,6 @@ std::string tabellone::print() {
     return ris;
 }
 
-//Da modificare dopo adeguamento costruttori classi derivate di piece
 std::shared_ptr<piece> tabellone::promotion(short int column, short int row, char pieceName) {
     shared_ptr<piece> piece = getPiece(column,row);
     if(piece->get_piece_name()!='P' || piece->get_piece_name()!='p') throw IllegalMoveException();
@@ -300,7 +301,12 @@ std::shared_ptr<piece> tabellone::promotion(short int column, short int row, cha
 
 bool tabellone::hasNextMove() const {
     std::vector<std::vector<shared_ptr<piece>>> board;
-    //Generate board for next check
+    for(auto & blackPiece : blackPieces) {
+        board[blackPiece->get_column()-1][blackPiece->get_row()-1] = blackPiece;
+    }
+    for(auto & whitePiece : whitePieces){
+        board[whitePiece->get_column()-1][whitePiece->get_row()-1] = whitePiece;
+    }
 
     if(isTie(board)) throw MatchTiedException();
     if(isCheckmate(getKing(false),board)) throw CheckmateException();
@@ -312,16 +318,18 @@ bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const 
     if(tieMoves>=50) return true;   //50 moves without moving pawns ore removing pieces
     if(std::count(history.begin(),history.end(),printHistory())>=3) return true; //same situation of the board for three times or more
     if((whitePieces.size()<3 && blackPieces.size()<2) || (blackPieces.size()<3 && whitePieces.size()<2)) return true; //insufficient pieces
-    //no available moves
+    //Check For available moves
+    int movablePieces=0;
+    for(auto & blackPiece : blackPieces) {
+        if(canMove(blackPiece,board)) movablePieces++;
+    }
+
+    for(auto & whitePiece : whitePieces){
+        if(canMove(whitePiece,board)) movablePieces++;
+    }
+    if(movablePieces==0) return true;
+
     //requested tie
-    return false;
-}
-
-bool tabellone::isCheckmate(const shared_ptr<piece>& king, std::vector<std::vector<shared_ptr<piece>>> &board) const {
-    return false;
-}
-
-bool tabellone::isCheck(short int column, short int row, char pieceName, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
     return false;
 }
 
@@ -350,22 +358,14 @@ std::string tabellone::printHistory() const{
     return ris;
 }
 
-bool tabellone::canMove(shared_ptr<piece>) const {
-    return false;
-}
-
 shared_ptr<piece> tabellone::getKing(bool isBlack) const {
     if(isBlack){
-        for (const auto & blackPiece : blackPieces){
-            if(blackPiece->get_piece_name()=='K') return blackPiece;
-        }
-        throw InvalidStateException();
+        if((blackPieces.front()->get_piece_name() != 'K')) throw InvalidStateException();
+        return blackPieces.front();
     }
     else{
-        for (const auto & whitePiece : whitePieces){
-            if(whitePiece->get_piece_name()=='k') return whitePiece;
-        }
-        throw InvalidStateException();
+        if((whitePieces.front()->get_piece_name() != 'k')) throw InvalidStateException();
+        return whitePieces.front();
     }
 }
 
@@ -387,5 +387,32 @@ std::vector<shared_ptr<piece>> tabellone::getPieces(bool isBlackPieces) const {
     if(isBlackPieces)   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
     else std::copy(whitePieces.begin(),whitePieces.end(), ris.begin());
     return ris;
+}
+
+bool tabellone::solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow) {
+    if((checkedPiece->get_column()==startColumn && checkedPiece->get_row()==startRow) && endColumn==startColumn+1 || endRow==startRow+1) return true; //The king Moves
+    if((std::isupper(getPiece(startColumn,startRow)->get_piece_name())!=std::isupper(checkIssuerPiece->get_piece_name())) && (endColumn==checkIssuerPiece->get_column() && endRow==checkIssuerPiece->get_row())) return true; //The check Isuuer is removed
+    //Check if between
+    if(checkedPiece->get_column()==checkIssuerPiece->get_column()){ //Vertical Check
+
+    }
+    else if(checkedPiece->get_row()==checkIssuerPiece->get_row()){  //Horizontal Check
+
+    }
+    else {  //Oblique Check
+        short int columnDelta = (std::max(checkIssuerPiece->get_column(),checkedPiece->get_column())-std::min(checkIssuerPiece->get_column(),checkedPiece->get_column()));
+        short int rowDelta = (std::max(checkIssuerPiece->get_row(),checkedPiece->get_row())-std::min(checkIssuerPiece->get_row(),checkedPiece->get_row()));
+        if (columnDelta==rowDelta){
+            for(short int i=1;i<rowDelta;i++){
+                if((std::min(checkIssuerPiece->get_row(),checkedPiece->get_row())+i==))
+            }
+
+        }
+    }
+    return false;
+}
+
+bool tabellone::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
+    return false;
 }
 
