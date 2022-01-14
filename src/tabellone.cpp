@@ -17,27 +17,27 @@ tabellone::tabellone() {
     tieMoves=0;
     history = std::vector<std::string>();
     //Generating White Pieces
-    whitePieces.push_back(std::shared_ptr<piece>{new king('r',4,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new queen('d',5,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',1,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',8,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',2,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',7,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',3,1)});
-    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',6,1)});
+    whitePieces.push_back(std::shared_ptr<piece>{new king('r',3,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new queen('d',4,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',0,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new rook('t',7,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',1,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new knight('c',6,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',2,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new bishop('a',5,0)});
     //Generating Black Pieces
-    blackPieces.push_back(std::shared_ptr<piece>{new king('R',4,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new queen('D',5,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',1,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',8,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',2,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',7,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',3,8)});
-    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',6,8)});
+    blackPieces.push_back(std::shared_ptr<piece>{new king('R',3,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new queen('D',4,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',0,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new rook('T',7,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',1,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new knight('C',6,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',2,7)});
+    blackPieces.push_back(std::shared_ptr<piece>{new bishop('A',5,7)});
     //Generating Pawns
-    for(int i=1;i<=8;i++){
-        whitePieces.push_back(std::shared_ptr<piece>{new pawn('p',i,2)});
-        blackPieces.push_back(std::shared_ptr<piece>{new pawn('P',i,7)});
+    for(int i=0;i<8;i++){
+        whitePieces.push_back(std::shared_ptr<piece>{new pawn('p',i,1)});
+        blackPieces.push_back(std::shared_ptr<piece>{new pawn('P',i,6)});
     }
     history.push_back(printHistory());
 }
@@ -64,6 +64,7 @@ void tabellone::move(short int startColumn, short int startRow, short int endCol
                 removePiece(endPiece);
             }
             else {  //Standard movement
+                if((std::max(startRow,endRow)-std::min(startRow,endRow))==2 && startPiece->is_moved()) throw IllegalMoveException();
                 for (int i=(std::max(startRow,endRow)-std::min(startRow,endRow));i>=0;i--){
                     shared_ptr<piece> currentPiece = getPiece(startColumn,std::max(startRow,endRow)-i);
                     if(currentPiece!= nullptr) throw IllegalMoveException();
@@ -261,7 +262,7 @@ std::string tabellone::print() {
     for(auto & whitePiece : whitePieces){
         matr[whitePiece->get_column()-1][whitePiece->get_row()-1] = whitePiece->get_piece_name();
     }
-    for(int i=8; i>0; i--){
+    for(int i=7; i>=0; i--){
         ris+=to_string(i)+" ";
         for(auto & j : matr){
             ris+=j[i];
