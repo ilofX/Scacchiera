@@ -321,16 +321,23 @@ bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const 
     if((whitePieces.size()<3 && blackPieces.size()<2) || (blackPieces.size()<3 && whitePieces.size()<2)) return true; //insufficient pieces
     //Check For available moves
     int movablePieces=0;
-    for(auto & blackPiece : blackPieces) {
-        if(canMove(blackPiece,board)) movablePieces++;
+    if(turn%2==1) {
+        for(auto & blackPiece : blackPieces) {
+            if(canMove(blackPiece,board)){
+                movablePieces++;
+                break;
+            }
+        }
     }
-
-    for(auto & whitePiece : whitePieces){
-        if(canMove(whitePiece,board)) movablePieces++;
+    else {
+        for (auto &whitePiece: whitePieces) {
+            if (canMove(whitePiece, board)) {
+                movablePieces++;
+                break;
+            }
+        }
     }
     if(movablePieces==0) return true;
-
-    //requested tie
     return false;
 }
 
@@ -395,25 +402,106 @@ bool tabellone::solvesCheck(short int startColumn, short int startRow, short int
     if((std::isupper(getPiece(startColumn,startRow)->get_piece_name())!=std::isupper(checkIssuerPiece->get_piece_name())) && (endColumn==checkIssuerPiece->get_column() && endRow==checkIssuerPiece->get_row())) return true; //The check Isuuer is removed
     //Check if between
     if(checkedPiece->get_column()==checkIssuerPiece->get_column()){ //Vertical Check
-
+        if(endRow>std::min(checkedPiece->get_row(),checkIssuerPiece->get_row()) && endRow<std::max(checkedPiece->get_row(),checkIssuerPiece->get_row())) return true;
     }
     else if(checkedPiece->get_row()==checkIssuerPiece->get_row()){  //Horizontal Check
-
+        if(endRow>std::min(checkedPiece->get_column(),checkIssuerPiece->get_column()) && endRow<std::max(checkedPiece->get_column(),checkIssuerPiece->get_column())) return true;
     }
     else {  //Oblique Check
-        short int columnDelta = (std::max(checkIssuerPiece->get_column(),checkedPiece->get_column())-std::min(checkIssuerPiece->get_column(),checkedPiece->get_column()));
-        short int rowDelta = (std::max(checkIssuerPiece->get_row(),checkedPiece->get_row())-std::min(checkIssuerPiece->get_row(),checkedPiece->get_row()));
-        if (columnDelta==rowDelta){
-            for(short int i=1;i<rowDelta;i++){
-                if((std::min(checkIssuerPiece->get_row(),checkedPiece->get_row())+i==))
+        if(checkedPiece->get_row()<checkIssuerPiece->get_row()){    //Top-Oblique Check
+            if(checkedPiece->get_column()<checkIssuerPiece->get_column()){  //Top-Right Check
+                if(endRow>checkedPiece->get_row() && endColumn>checkedPiece->get_column() && endRow<checkIssuerPiece->get_row() && endColumn<checkIssuerPiece->get_column()) return true;
             }
-
+            else{   //Top-left Check
+                if(endRow>checkedPiece->get_row() && endColumn<checkedPiece->get_column() && endRow<checkIssuerPiece->get_row() && endColumn>checkIssuerPiece->get_column()) return true;
+            }
+        }
+        else{
+            if(checkedPiece->get_column()<checkIssuerPiece->get_column()){  //Bottom-Right check
+                if(endRow<checkedPiece->get_row() && endColumn>checkedPiece->get_column() && endRow>checkIssuerPiece->get_row() && endColumn<checkIssuerPiece->get_column()) return true;
+            }
+            else{   //Bottom-left Check
+                if(endRow>checkedPiece->get_row() && endColumn<checkedPiece->get_column() && endRow>checkIssuerPiece->get_row() && endColumn>checkIssuerPiece->get_column()) return true;
+            }
         }
     }
     return false;
 }
 
-bool tabellone::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
+void tabellone::clearCheck() {
+    checkIssuerPiece = nullptr;
+    checkedPiece = nullptr;
+}
+
+bool tabellone::isEnemyPiece(const shared_ptr<piece> &piece1, const shared_ptr<piece> &piece2) {
+    if(piece1 == nullptr || piece2 == nullptr) return false;
+    if(std::isupper(piece1->get_piece_name())==std::isupper(piece2->get_piece_name())) return true;
     return false;
 }
 
+
+bool tabellone::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
+    if(pieceToCheck == nullptr) throw InvalidStateException();
+    switch (pieceToCheck->get_piece_name()){
+        case 'R':
+        case 'r':
+            //Non devo controllare per arrocco perchè comunque deve essere libera la casella adiacente al re per eseguire l'arrocco
+        case 'D':
+        case 'd':
+            //Horizontal and Vertical checks
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row())==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row())==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()))) return true;
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1))) return true;
+            //Oblique checks
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1))) return true;
+            break;
+
+        case 'T':
+        case 't':
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row())==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row())==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()))) return true;
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1))) return true;
+            break;
+
+        case 'A':
+        case 'a':
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1))) return true;
+            break;
+        case 'C':
+        case 'c':
+            if(board.at(pieceToCheck->get_column()+2).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+2).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()+2).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+2).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()-2).at(pieceToCheck->get_row()+1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-2).at(pieceToCheck->get_row()+1))) return true;
+            if(board.at(pieceToCheck->get_column()-2).at(pieceToCheck->get_row()-1)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-2).at(pieceToCheck->get_row()-1))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-2)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-2))) return true;
+            if(board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+2)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+2))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-2)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-2))) return true;
+            if(board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+2)==nullptr || isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+2))) return true;
+            break;
+
+        case 'P':
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1)==nullptr) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1))) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1))) return true;
+        case 'p':
+            if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1)==nullptr) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1))) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()+1))) return true;
+
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()))) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()))) return true;
+            break;
+
+        default:
+            throw InvalidStateException();
+    }
+    return false;
+}

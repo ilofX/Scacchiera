@@ -18,14 +18,14 @@ public:
     tabellone();
 
     //Copy Constructor
-    tabellone(const tabellone& tab) = delete;
+    tabellone(const tabellone& tab) = default;
     //Copy Assignment
-    tabellone& operator=(const tabellone& tab) = delete;
+    tabellone& operator=(const tabellone& tab) = default;
 
     //Move Constructor
-    tabellone(tabellone&& tab);
+    tabellone(tabellone&& tab) = default;
     //Move Assignement
-    tabellone& operator=(tabellone&& tab);
+    tabellone& operator=(tabellone&& tab) = default;
 
     class IllegalMoveException: public std::exception{};
     class IllegalCoordinatesException: public std::exception{};
@@ -41,7 +41,9 @@ public:
     std::vector<shared_ptr<piece>> getPieces(bool isBlackPieces) const;
     std::string print();
     bool solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow);
+    void clearCheck();
 
+    ~tabellone() = default;
 
 private:
     std::string printHistory() const;
@@ -53,6 +55,7 @@ private:
     bool isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const;
     void removePiece(const std::shared_ptr<piece>& removePiece);
     void deleteHistory();
+    static bool isEnemyPiece(const shared_ptr<piece>& piece1, const shared_ptr<piece>& piece2);
 
     std::list<std::shared_ptr<piece>> whitePieces, blackPieces;
     std::shared_ptr<piece> checkedPiece= nullptr, checkIssuerPiece= nullptr;

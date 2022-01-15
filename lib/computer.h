@@ -13,7 +13,7 @@ class computer : public player{
 		//computer& operator=(const computer& h);
 		//computer& operator=(computer&& h);
 
-		shared_ptr<piece> get_random_piece();
+		shared_ptr<piece> get_random_piece(bool b);
 
 		//bool is_ranndom_move_valid();
 
