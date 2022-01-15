@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #ifndef QUEEN_H
 #define QUEEN_H
 

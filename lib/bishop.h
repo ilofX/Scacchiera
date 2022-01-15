@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #ifndef BISHOP_H
 #define BISHOP_H
 

@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #include "player.h"
 
 player::player(char n, tabellone& t){

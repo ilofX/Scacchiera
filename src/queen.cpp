@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #include "queen.h"
 
 queen::queen(char name, short int c, short int r) : piece(name, r, c){}

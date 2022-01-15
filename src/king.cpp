@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #include "king.h"
 
 king::king(char name, short int c, short int r) : piece(name, r, c){}

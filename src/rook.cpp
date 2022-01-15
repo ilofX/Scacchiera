@@ -1,3 +1,7 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
+
 #include "rook.h"
 
 rook::rook(char name, short int c, short int r) : piece(name, r, c){}

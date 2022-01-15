@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #include "pawn.h"
 
 pawn::pawn(char name, short int c, short int r) : piece(name, r, c){}

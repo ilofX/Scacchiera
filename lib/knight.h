@@ -1,3 +1,6 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
 #ifndef KNIGHT_H
 #define KNIGHT_H
 

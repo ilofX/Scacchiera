@@ -1,3 +1,7 @@
+//
+// Created by Nicolò Tesser on 22/12/2021
+//
+
 #ifndef KING_H
 #define KING_H
 
