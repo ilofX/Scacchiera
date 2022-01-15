@@ -1,4 +1,5 @@
 #include "computer.h"
+#include "player.h"
 
 computer::computer(char n, const tabellone& t) : player(n, t) {}
 
