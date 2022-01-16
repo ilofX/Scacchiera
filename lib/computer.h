@@ -1,5 +1,5 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolï¿½ Tesser on 22/12/2021
 //
 #ifndef COMPUTER_H
 #define COMPUTER_H
@@ -8,7 +8,7 @@
 
 class computer : public player{
 	public:
-		computer(char n, const tabellone& t);
+		computer(char n, tabellone& t);
 
 		//computer(const computer& h);
 		//computer(computer&& h);

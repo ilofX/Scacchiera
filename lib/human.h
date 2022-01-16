@@ -1,5 +1,5 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolï¿½ Tesser on 22/12/2021
 //
 #ifndef HUMAN_H
 #define HUMAN_H
@@ -8,7 +8,7 @@
 
 class human : public player{
 	public:
-		human(char n, const tabellone& t);
+		human(char n, tabellone& t);
 
 		//human(const human& h);
 		//human(human&& h);
