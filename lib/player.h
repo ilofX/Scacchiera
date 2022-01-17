@@ -7,13 +7,13 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
-#include "tabellone.h"
+#include "board.h"
 
 using namespace std;
 
 class player{
 	public:
-		player(char n, tabellone& t);
+		player(char n, board& t);
 
 		//player(const player& p);
 		//player(player&& p);
@@ -35,7 +35,7 @@ class player{
 		//virtual ~player();
 	protected:
 		char color;
-		tabellone& scacchiera;
+		board& scacchiera;
 };
 
 #endif

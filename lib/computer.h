@@ -8,7 +8,7 @@
 
 class computer : public player{
 	public:
-		computer(char n, tabellone& t);
+		computer(char n, board& t);
 
 		//computer(const computer& h);
 		//computer(computer&& h);

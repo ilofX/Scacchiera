@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "tabellone.h"
+#include "board.h"
 #include "player.h"
 
 
@@ -21,49 +21,49 @@ int main(int argc, char* argv[]) {
         exit(2);
     }
     //Board Construction
-    tabellone board = tabellone();
+    board tabellone = board();
     //Match Loop
     try {
-        while (board.hasNextMove()) {
+        while (tabellone.hasNextMove()) {
 
             try {
 
             }
-            catch (tabellone::IllegalMoveException &ex) {
+            catch (board::IllegalMoveException &ex) {
                 std::cout << "La mossa richiesta non è valida" << std::endl;
                 continue;
             }
-            catch (tabellone::IllegalCoordinatesException &ex) {
+            catch (board::IllegalCoordinatesException &ex) {
                 std::cout << "Le coordinate inserite non sono valide" << std::endl;
                 continue;
             }
-            catch (tabellone::CheckException &ex) {
+            catch (board::CheckException &ex) {
                 try { //Attempt possible solution
                     //get move
 
                     //if(board.solvesCheck(startColumn, startRow, endColumn, endRow)) move(startColumn, startRow, endColumn, endRow);
                 }
-                catch(tabellone::IllegalMoveException& ex){
-                    throw tabellone::CheckException();
+                catch(board::IllegalMoveException& ex){
+                    throw board::CheckException();
                 }
             }
-            catch (tabellone::PromotionException &ex) {
+            catch (board::PromotionException &ex) {
                 //Get promotion piece selection
 
                 //board.promotion(endColumn, endRow, promotion);
             }
-            catch (tabellone::InvalidStateException &ex) {
+            catch (board::InvalidStateException &ex) {
                 std::cout << "La partita ha raggiunto uno stato inconsistente, terminato" << std::endl;
                 exit(-1);
             }
 
         }
     }
-    catch (tabellone::CheckmateException &ex) {
+    catch (board::CheckmateException &ex) {
         std::cout << "La partita è terminata per scacco matto" << std::endl;
         exit(40);
     }
-    catch (tabellone::MatchTiedException &ex) {
+    catch (board::MatchTiedException &ex) {
         std::cout << "La partita è terminata per parità" << std::endl;
         exit(50);
     }

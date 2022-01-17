@@ -4,9 +4,8 @@
 #include "computer.h"
 #include "player.h"
 
-computer::computer(char n, tabellone& t) : player(n, t) {}
+computer::computer(char n, board& t) : player(n, t) {}
 
-<<<<<<< HEAD
 shared_ptr<piece> computer::get_random_piece(char c) {
     if(n == 'b' || n == 'w' || n == 'B' || n == 'W'){
         vector<shared_ptr<piece>> v = this->scacchiera.getPieces(c);
@@ -15,12 +14,6 @@ shared_ptr<piece> computer::get_random_piece(char c) {
     }else{
         throw InvalidStateException();
     }
-=======
-shared_ptr<piece> computer::get_random_piece(bool b) {
-    vector<shared_ptr<piece>> v = this->scacchiera.getPieces(b);
-    int r = std::rand()%(v.size());
-    return v[r];
->>>>>>> fe988a5bf16d9e6b0ec17fc6af627464842aa3a0
 }
 
 short int computer::get_random_col(shared_ptr<piece> p){

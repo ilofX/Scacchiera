@@ -3,7 +3,7 @@
 //
 #include "player.h"
 
-player::player(char n, tabellone& t): scacchiera{t} {
+player::player(char n, board& t): scacchiera{t} {
 	if(n == 'b' || n == 'w' || n == 'B' || n == 'W'){
 		color = n;
 	}else{

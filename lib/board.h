@@ -13,19 +13,19 @@
 #include "piece.h"
 
 
-class tabellone{
+class board{
 public:
-    tabellone();
+    board();
 
     //Copy Constructor
-    tabellone(const tabellone& tab) = default;
+    board(const board& tab) = default;
     //Copy Assignment
-    tabellone& operator=(const tabellone& tab) = default;
+    board& operator=(const board& tab) = default;
 
     //Move Constructor
-    tabellone(tabellone&& tab) = default;
+    board(board&& tab) = default;
     //Move Assignement
-    tabellone& operator=(tabellone&& tab) = default;
+    board& operator=(board&& tab) = default;
 
     class IllegalMoveException: public std::exception{};
     class IllegalCoordinatesException: public std::exception{};
@@ -38,12 +38,12 @@ public:
     bool hasNextMove() const;
     void move(short int startColumn, short int startRow, short int endColumn, short int endRow);
     std::shared_ptr<piece> promotion(short int Column, short int Row, char piece);
-    std::vector<shared_ptr<piece>> getPieces(bool isBlackPieces) const;
+    std::vector<shared_ptr<piece>> getPieces(char c) const;
     std::string print();
     bool solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow);
     void clearCheck();
 
-    ~tabellone() = default;
+    ~board() = default;
 
 private:
     std::string printHistory() const;

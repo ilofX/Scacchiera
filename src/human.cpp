@@ -4,7 +4,7 @@
 #include "human.h"
 #include "piece.h"
 
-human::human(char n, tabellone& t) : player(n, t) {}
+human::human(char n, board& t) : player(n, t) {}
 
 bool human::move(string s){
     bool flag = false;

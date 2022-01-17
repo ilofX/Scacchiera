@@ -3,7 +3,7 @@
 //
 
 #include <algorithm>
-#include "tabellone.h"
+#include "board.h"
 #include "piece.h"
 #include "queen.h"
 #include "bishop.h"
@@ -12,7 +12,7 @@
 #include "rook.h"
 #include "king.h"
 
-tabellone::tabellone() {
+board::board() {
     turn=0;
     tieMoves=0;
     history = std::vector<std::string>();
@@ -44,7 +44,7 @@ tabellone::tabellone() {
 
 
 
-void tabellone::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
+void board::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
     if(startPiece==nullptr) throw IllegalCoordinatesException();
     if(!startPiece->is_valid_final_pos(endColumn,endRow)) throw IllegalCoordinatesException();
@@ -253,7 +253,7 @@ void tabellone::move(short int startColumn, short int startRow, short int endCol
     tieMoves++;
 }
 
-std::string tabellone::print() {
+std::string board::print() {
     std::string ris;
     char matr[8][8] {' '};
     for(auto & blackPiece : blackPieces) {
@@ -273,7 +273,7 @@ std::string tabellone::print() {
     return ris;
 }
 
-std::shared_ptr<piece> tabellone::promotion(short int column, short int row, char pieceName) {
+std::shared_ptr<piece> board::promotion(short int column, short int row, char pieceName) {
     shared_ptr<piece> piece = getPiece(column,row);
     if(piece->get_piece_name()!='P' || piece->get_piece_name()!='p') throw IllegalMoveException();
     switch (pieceName) {
@@ -300,7 +300,7 @@ std::shared_ptr<piece> tabellone::promotion(short int column, short int row, cha
     return piece;
 }
 
-bool tabellone::hasNextMove() const {
+bool board::hasNextMove() const {
     std::vector<std::vector<shared_ptr<piece>>> board;
     for(auto & blackPiece : blackPieces) {
         board[blackPiece->get_column()-1][blackPiece->get_row()-1] = blackPiece;
@@ -315,7 +315,7 @@ bool tabellone::hasNextMove() const {
     return true;
 }
 
-bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
+bool board::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
     if(tieMoves>=50) return true;   //50 moves without moving pawns ore removing pieces
     if(std::count(history.begin(),history.end(),printHistory())>=3) return true; //same situation of the board for three times or more
     if((whitePieces.size()<3 && blackPieces.size()<2) || (blackPieces.size()<3 && whitePieces.size()<2)) return true; //insufficient pieces
@@ -341,7 +341,7 @@ bool tabellone::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const 
     return false;
 }
 
-void tabellone::removePiece(const std::shared_ptr<piece>& removePiece){
+void board::removePiece(const std::shared_ptr<piece>& removePiece){
     if(removePiece->get_piece_name()>97){
         whitePieces.remove(removePiece);
     }
@@ -351,11 +351,11 @@ void tabellone::removePiece(const std::shared_ptr<piece>& removePiece){
     deleteHistory();
 }
 
-void tabellone::deleteHistory() {
+void board::deleteHistory() {
     history.clear();
 }
 
-std::string tabellone::printHistory() const{
+std::string board::printHistory() const{
     std::string ris;
     for(const auto& piece : whitePieces){
         ris+=to_string(piece->get_piece_name())+ to_string(piece->get_column())+ to_string(piece->get_row());
@@ -366,7 +366,7 @@ std::string tabellone::printHistory() const{
     return ris;
 }
 
-shared_ptr<piece> tabellone::getKing(bool isBlack) const {
+shared_ptr<piece> board::getKing(bool isBlack) const {
     if(isBlack){
         if((blackPieces.front()->get_piece_name() != 'K')) throw InvalidStateException();
         return blackPieces.front();
@@ -377,7 +377,7 @@ shared_ptr<piece> tabellone::getKing(bool isBlack) const {
     }
 }
 
-shared_ptr<piece> tabellone::getPiece(short int column, short int row) {
+shared_ptr<piece> board::getPiece(short int column, short int row) {
     if(column>8 || row>8) throw IllegalCoordinatesException();
 
     for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
@@ -390,14 +390,14 @@ shared_ptr<piece> tabellone::getPiece(short int column, short int row) {
     return nullptr;
 }
 
-std::vector<shared_ptr<piece>> tabellone::getPieces(char c) const {
+std::vector<shared_ptr<piece>> board::getPieces(char c) const {
     std::vector<shared_ptr<piece>> ris;
     if(c == 'b' || c == 'B')   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
     else std::copy(whitePieces.begin(),whitePieces.end(), ris.begin());
     return ris;
 }
 
-bool tabellone::solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow) {
+bool board::solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     if((checkedPiece->get_column()==startColumn && checkedPiece->get_row()==startRow) && endColumn==startColumn+1 || endRow==startRow+1) return true; //The king Moves
     if((std::isupper(getPiece(startColumn,startRow)->get_piece_name())!=std::isupper(checkIssuerPiece->get_piece_name())) && (endColumn==checkIssuerPiece->get_column() && endRow==checkIssuerPiece->get_row())) return true; //The check Isuuer is removed
     //Check if between
@@ -428,19 +428,19 @@ bool tabellone::solvesCheck(short int startColumn, short int startRow, short int
     return false;
 }
 
-void tabellone::clearCheck() {
+void board::clearCheck() {
     checkIssuerPiece = nullptr;
     checkedPiece = nullptr;
 }
 
-bool tabellone::isEnemyPiece(const shared_ptr<piece> &piece1, const shared_ptr<piece> &piece2) {
+bool board::isEnemyPiece(const shared_ptr<piece> &piece1, const shared_ptr<piece> &piece2) {
     if(piece1 == nullptr || piece2 == nullptr) return false;
     if(std::isupper(piece1->get_piece_name())==std::isupper(piece2->get_piece_name())) return true;
     return false;
 }
 
 
-bool tabellone::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
+bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
     if(pieceToCheck == nullptr) throw InvalidStateException();
     switch (pieceToCheck->get_piece_name()){
         case 'R':

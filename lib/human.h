@@ -8,7 +8,7 @@
 
 class human : public player{
 	public:
-		human(char n, tabellone& t);
+		human(char n, board& t);
 
 		//human(const human& h);
 		//human(human&& h);
