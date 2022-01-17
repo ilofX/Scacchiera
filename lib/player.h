@@ -13,7 +13,7 @@ using namespace std;
 
 class player{
 	public:
-		player(char n, const tabellone& t);
+		player(char n, tabellone& t);
 
 		//player(const player& p);
 		//player(player&& p);
@@ -29,6 +29,7 @@ class player{
 
 		vector<short int> convert_input(string s);
 
+        class InvalidColorException : public std::exception{};
         class InvalidMoveException : public std::exception{};
 
 		//virtual ~player();

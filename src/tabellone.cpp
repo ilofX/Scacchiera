@@ -390,9 +390,9 @@ shared_ptr<piece> tabellone::getPiece(short int column, short int row) {
     return nullptr;
 }
 
-std::vector<shared_ptr<piece>> tabellone::getPieces(bool isBlackPieces) const {
+std::vector<shared_ptr<piece>> tabellone::getPieces(char c) const {
     std::vector<shared_ptr<piece>> ris;
-    if(isBlackPieces)   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
+    if(c == 'b' || c == 'B')   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
     else std::copy(whitePieces.begin(),whitePieces.end(), ris.begin());
     return ris;
 }

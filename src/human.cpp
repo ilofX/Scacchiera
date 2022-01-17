@@ -1,10 +1,10 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolï¿½ Tesser on 22/12/2021
 //
 #include "human.h"
 #include "piece.h"
 
-human::human(char n, const tabellone& t) : player(n, t) {}
+human::human(char n, tabellone& t) : player(n, t) {}
 
 bool human::move(string s){
     bool flag = false;

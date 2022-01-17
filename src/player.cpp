@@ -1,14 +1,13 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolï¿½ Tesser on 22/12/2021
 //
 #include "player.h"
 
-player::player(char n, tabellone& t){
-	this->scacchiera = t;
+player::player(char n, tabellone& t): scacchiera{t} {
 	if(n == 'b' || n == 'w' || n == 'B' || n == 'W'){
 		color = n;
 	}else{
-		throw std::InvalisStateException("Sono validi solo i colori b, w o B, W");
+		throw InvalidColorException();
 	}
 }
 
