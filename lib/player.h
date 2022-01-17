@@ -29,6 +29,8 @@ class player{
 
 		vector<short int> convert_input(string s);
 
+		char get_color();
+
         class InvalidColorException : public std::exception{};
         class InvalidMoveException : public std::exception{};
 

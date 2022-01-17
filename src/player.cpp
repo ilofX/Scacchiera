@@ -61,5 +61,9 @@ vector<short int> player::convert_input(string s){ //il vettore tornato contiene
 	return ret;
 }
 
+char player::get_color(){
+    return this->color;
+}
+
 
 

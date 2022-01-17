@@ -1,10 +1,11 @@
 //
-// Created by Nicol� Tesser on 22/12/2021
+// Created by Nicolo Tesser on 22/12/2021
 //
 #ifndef COMPUTER_H
 #define COMPUTER_H
 
 #include "player.h"
+
 
 class computer : public player{
 	public:
@@ -23,9 +24,7 @@ class computer : public player{
 		short int get_random_col(shared_ptr<piece> p);
 		short int get_random_row(shared_ptr<piece> p);
 
-		string move_to_string(short int sc, short in sr, short int ec, short int er);
-
-		bool move(string s);
+		void move(short int sc, short int sr, short int ec, short int er);
 
 		//~computer();
 };
