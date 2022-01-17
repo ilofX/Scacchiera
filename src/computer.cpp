@@ -12,18 +12,18 @@ shared_ptr<piece> computer::get_random_piece(char c) {
         int r = std::rand()%(v.size());
         return v[r];
     }else{
-        throw InvalidStateException();
+        //throw InvalidStateException();
     }
 }
 
 short int computer::get_random_col(shared_ptr<piece> p){
-    short int res;
+    short int res, r;
     switch (p->get_piece_name()){
         case 'R':
         case 'r':
         case 'P':
         case 'p':
-            short int r = -1 + std::rand()%3;
+            r = -1 + std::rand()%3;
             res = r + p->get_column();
             break;
 
@@ -33,13 +33,13 @@ short int computer::get_random_col(shared_ptr<piece> p){
         case 't':
         case 'A':
         case 'a':
-            short int r = -7 std::rand()%15;
+            r = -7 + std::rand()%15;
             res = r + p->get_column();
             break;
 
         case 'C':
         case 'c':
-            short int r = -2 + std::rand()%5;
+            r = -2 + std::rand()%5;
             res = r + p->get_column();
             break;
 
@@ -49,11 +49,11 @@ short int computer::get_random_col(shared_ptr<piece> p){
 }
 
 short int computer::get_random_row(shared_ptr<piece> p){
-    short int res;
+    short int res, r;
     switch (p->get_piece_name()){
         case 'R':
         case 'r':
-            short int r = -1 + std::rand()%3;
+            r = -1 + std::rand()%3;
             res = r + p->get_column();
             break;
 
@@ -63,22 +63,22 @@ short int computer::get_random_row(shared_ptr<piece> p){
         case 't':
         case 'A':
         case 'a':
-            short int r = -7 std::rand()%15;
+            r = -7 + std::rand()%15;
             res = r + p->get_column();
             break;
 
         case 'C':
         case 'c':
-            short int r = -2 + std::rand()%5;
+            r = -2 + std::rand()%5;
             res = r + p->get_column();
             break;
 
         case 'P':
-            short int r = 0 + std::rand()%2;
+            r = 0 + std::rand()%2;
             res = r + p->get_column();
             break;
         case 'p':
-            short int r = -1 + std::rand()%2;
+            r = -1 + std::rand()%2;
             res = r + p->get_column();
             break;
 
@@ -87,9 +87,9 @@ short int computer::get_random_row(shared_ptr<piece> p){
     return res;
 }
 
-void computer::move(short int sc, short int sr, short int ec, short int er){
+void computer::move(){
     shared_ptr<piece> p = get_random_piece(this->get_color());
-    short int ec = get_random_column(p);
+    short int ec = get_random_col(p);
     short int er = get_random_row(p);
     this->scacchiera.move(p->get_column(), p->get_row(), ec, er);
 }

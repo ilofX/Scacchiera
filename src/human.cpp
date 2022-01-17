@@ -10,7 +10,7 @@ bool human::move(string s){
     bool flag = false;
     if(!is_valid_input(s)){
         throw InvalidMoveException();
-    }else if(is_display_move()){
+    }else if(is_display_input(s)){
             this->scacchiera.print();
             throw InvalidMoveException();
             //break;
