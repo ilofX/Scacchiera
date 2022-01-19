@@ -18,10 +18,11 @@ int main(int argc, char* argv[]) {
 
     }
     else{
-        exit(2);
+        //exit(2);
     }
     //Board Construction
     board tabellone = board();
+    std::cout << tabellone.print() << std::endl;
     //Match Loop
     try {
         while (tabellone.hasNextMove()) {
@@ -58,6 +59,10 @@ int main(int argc, char* argv[]) {
             }
 
         }
+    }
+    catch (board::InvalidStateException &ex) {
+        std::cout << "La partita ha raggiunto uno stato inconsistente, terminato" << std::endl;
+        exit(-1);
     }
     catch (board::CheckmateException &ex) {
         std::cout << "La partita è terminata per scacco matto" << std::endl;

@@ -256,20 +256,22 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
 std::string board::print() {
     std::string ris;
     char matr[8][8] {' '};
+    ris+='\n';
     for(auto & blackPiece : blackPieces) {
-        matr[blackPiece->get_column()-1][blackPiece->get_row()-1] = blackPiece->get_piece_name();
+        //Debug statement //std::cout << std::endl << "Pezzo: " << blackPiece->get_piece_name() << " colonna: " << blackPiece->get_column()-1 << " riga: " << blackPiece->get_row()-1 << std::endl;
+        matr[blackPiece->get_row()][blackPiece->get_column()] = blackPiece->get_piece_name();
     }
     for(auto & whitePiece : whitePieces){
-        matr[whitePiece->get_column()-1][whitePiece->get_row()-1] = whitePiece->get_piece_name();
+        matr[whitePiece->get_row()][whitePiece->get_column()] = whitePiece->get_piece_name();
     }
     for(int i=7; i>=0; i--){
-        ris+=to_string(i)+" ";
+        ris+=to_string(i+1)+" ";
         for(auto & j : matr){
             ris+=j[i];
         }
         ris+='\n';
     }
-    ris+="ABCDEFGH";
+    ris+="  ABCDEFGH";
     return ris;
 }
 
@@ -301,12 +303,12 @@ std::shared_ptr<piece> board::promotion(short int column, short int row, char pi
 }
 
 bool board::hasNextMove() const {
-    std::vector<std::vector<shared_ptr<piece>>> board;
+    std::vector<std::vector<shared_ptr<piece>>> board = std::vector<std::vector<shared_ptr<piece>>>(8,std::vector<shared_ptr<piece>>(8));
     for(auto & blackPiece : blackPieces) {
-        board[blackPiece->get_column()-1][blackPiece->get_row()-1] = blackPiece;
+        board[blackPiece->get_row()][blackPiece->get_column()] = blackPiece;
     }
     for(auto & whitePiece : whitePieces){
-        board[whitePiece->get_column()-1][whitePiece->get_row()-1] = whitePiece;
+        board[whitePiece->get_row()][whitePiece->get_column()] = whitePiece;
     }
 
     if(isTie(board)) throw MatchTiedException();
@@ -368,11 +370,11 @@ std::string board::printHistory() const{
 
 shared_ptr<piece> board::getKing(bool isBlack) const {
     if(isBlack){
-        if((blackPieces.front()->get_piece_name() != 'K')) throw InvalidStateException();
+        if((blackPieces.front()->get_piece_name() != 'R')) throw InvalidStateException();
         return blackPieces.front();
     }
     else{
-        if((whitePieces.front()->get_piece_name() != 'k')) throw InvalidStateException();
+        if((whitePieces.front()->get_piece_name() != 'r')) throw InvalidStateException();
         return whitePieces.front();
     }
 }
