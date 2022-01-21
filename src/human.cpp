@@ -20,7 +20,7 @@ bool human::move(string s){
     }
 }
 
-vector<short int> player::convert_input(string s){ //il vettore tornato contiene [stat_col, start_row, end_col, end_row]
+vector<short int> human::convert_input(string s){ //il vettore tornato contiene [stat_col, start_row, end_col, end_row]
 	vector<short int> ret;
 
 	if(is_valid_input(s) && !is_display_input(s)){
@@ -31,4 +31,8 @@ vector<short int> player::convert_input(string s){ //il vettore tornato contiene
     }
 
 	return ret;
+}
+
+bool human::is_human(){
+    return true;
 }

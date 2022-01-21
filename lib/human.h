@@ -17,6 +17,10 @@ class human : public player{
 		//human& operator=(human&& h);
 
 		bool move(string s);
+        bool is_human();
+    protected:
+        vector<short int> convert_input(string s);
+
 
 		//~human();
 };

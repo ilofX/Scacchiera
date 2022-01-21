@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <string>
+#include<ctime>
 #include <cstdlib>
 #include "board.h"
 
@@ -21,13 +22,13 @@ class player{
 		//player& operator=(const player& p);
 		//player& operator=(player&& p);
 
+		virtual bool is_human();
+
 		virtual bool move(string s); //è un vector di 4 elementi [start_col, start_row, end_col, end_row]
 
-		bool is_valid_input(string s);
+        bool is_valid_input(string s);
 
 		bool is_display_input(string s);
-
-		vector<short int> convert_input(string s);
 
 		char get_color();
 

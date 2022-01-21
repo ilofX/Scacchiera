@@ -17,6 +17,8 @@ class computer : public player{
 		//computer& operator=(const computer& h);
 		//computer& operator=(computer&& h);
 
+		bool is_human();
+
 		shared_ptr<piece> get_random_piece(char c);
 
 		//bool is_ranndom_move_valid();

@@ -7,6 +7,7 @@
 computer::computer(char n, board& t) : player(n, t) {}
 
 shared_ptr<piece> computer::get_random_piece(char c) {
+    srand(time(0));
     if(c == 'b' || c == 'w' || c == 'B' || c == 'W'){
         vector<shared_ptr<piece>> v = this->scacchiera.getPieces(c);
         int r = std::rand()%(v.size());
@@ -16,7 +17,12 @@ shared_ptr<piece> computer::get_random_piece(char c) {
     }
 }
 
+bool computer::is_human(){
+    return false;
+}
+
 short int computer::get_random_col(shared_ptr<piece> p){
+    srand(time(0));
     short int res, r;
     switch (p->get_piece_name()){
         case 'R':
@@ -49,6 +55,7 @@ short int computer::get_random_col(shared_ptr<piece> p){
 }
 
 short int computer::get_random_row(shared_ptr<piece> p){
+    srand(time(0));
     short int res, r;
     switch (p->get_piece_name()){
         case 'R':
