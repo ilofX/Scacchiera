@@ -38,7 +38,7 @@ bool player::is_valid_input(string s){
 	}
 }
 
-bool is_display_input(string s){
+bool player::is_display_input(string s){
 	string s1 = "XX XX";
 	string s2 = "xx xx";
 	if(s.compare(s1) == 0 || s.compare(s2) == 0){

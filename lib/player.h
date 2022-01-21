@@ -25,7 +25,6 @@ class player{
 		virtual bool is_human();
 
 		virtual bool move(string s); //è un vector di 4 elementi [start_col, start_row, end_col, end_row]
-		virtual bool move();
 
         bool is_valid_input(string s);
 
