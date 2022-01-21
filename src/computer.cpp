@@ -111,7 +111,7 @@ short int computer::get_random_row(shared_ptr<piece> p){
     return res;
 }
 
-bool computer::move(){
+bool computer::move(string s){
     shared_ptr<piece> p = get_random_piece(this->get_color());
     short int ec = get_random_col(p);
     short int er = get_random_row(p);

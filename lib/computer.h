@@ -28,7 +28,7 @@ class computer : public player{
 		short int get_random_col(shared_ptr<piece> p);
 		short int get_random_row(shared_ptr<piece> p);
 
-		void move();
+		bool move(string s);
 
 		//~computer();
 };
