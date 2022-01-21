@@ -12,7 +12,7 @@ shared_ptr<piece> computer::get_random_piece(char c) {
         int r = std::rand()%(v.size());
         return v[r];
     }else{
-        //throw InvalidStateException();
+        throw player::InvalidStateException();
     }
 }
 
