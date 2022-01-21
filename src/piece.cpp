@@ -54,7 +54,7 @@ short int piece::get_row() const{
 	return row;
 }
 
-void piece::set_position(short int r, short int c){
+void piece::set_position(short int c, short int r){
 	if(r < 0 || r >= 8 || c < 0 || c >= 8){
 		throw invalid_argument("Riga o colonna non valida!");
 	}else{
