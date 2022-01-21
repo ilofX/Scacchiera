@@ -21,6 +21,8 @@ class computer : public player{
 
 		shared_ptr<piece> get_random_piece(char c);
 
+		char get_random_piece_to_promote();
+
 		//bool is_ranndom_move_valid();
 
 		short int get_random_col(shared_ptr<piece> p);

@@ -17,6 +17,23 @@ shared_ptr<piece> computer::get_random_piece(char c) {
     }
 }
 
+char computer::get_random_piece_to_promote() {
+    srand(time(0));
+    char ret;
+    int r = std::rand()%4;
+    switch(r){
+       case 1:
+           ret = 'c';
+       case 2:
+           ret = 't';
+       case 3:
+           ret = 'a';
+       case 4:
+           ret = 'd';
+    }
+    return ret;
+}
+
 bool computer::is_human(){
     return false;
 }
