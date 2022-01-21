@@ -3,9 +3,9 @@
 //
 #include "bishop.h"
 
-bishop::bishop(char name, short int c, short int r) : piece(name, r, c){}
+bishop::bishop(char name, short int c, short int r) : piece(name, c, r){}
 
-bishop::bishop(char name, short int c, short int r, int m, int lm) : piece(name, r, c, m, lm){}
+bishop::bishop(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
 //bishop::bishop(const bishop& k) : piece(k){}
 
