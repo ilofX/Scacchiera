@@ -18,11 +18,10 @@ class human : public player{
 
 		bool move(string s);
         bool is_human();
+
+    ~human() = default;
     protected:
         vector<short int> convert_input(string s);
-
-
-		//~human();
 };
 
 #endif

@@ -30,7 +30,7 @@ class computer : public player{
 
 		bool move(string s);
 
-		//~computer();
+		~computer() = default;
 };
 
 #endif

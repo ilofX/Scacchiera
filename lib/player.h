@@ -37,7 +37,7 @@ class player{
         class InvalidInputException : public std::exception{};
         class InvalidStateException : public std::exception{};
 
-		//virtual ~player();
+		virtual ~player() = default;
 	protected:
 		char color;
 		board& scacchiera;
