@@ -72,6 +72,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
                 }
                 if(endRow==0 || endRow==7){ //Promotion after standard movement
                     startPiece->set_position(endColumn,endRow);
+                    pieceToPromote = startPiece;
                     throw PromotionException();
                 }
             }
@@ -277,42 +278,51 @@ std::string board::print() {
     return ris;
 }
 
-std::shared_ptr<piece> board::promotion(short int column, short int row, char pieceName) {
-    shared_ptr<piece> piece = getPiece(column,row);
-    if(piece->get_piece_name()!='P' || piece->get_piece_name()!='p') throw IllegalMoveException();
+std::shared_ptr<piece> board::promotion(char pieceName) {
+    if(pieceToPromote->get_piece_name() != 'P' || pieceToPromote->get_piece_name() != 'p') throw IllegalMoveException();
     switch (pieceName) {
         case 'D':
+            pieceToPromote.reset(new queen(toupper(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
+            break;
         case 'd':
-            piece.reset(new queen(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
+            pieceToPromote.reset(new queen(tolower(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
             break;
         case 'T':
+            pieceToPromote.reset(new rook(toupper(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
+            break;
         case 't':
-            piece.reset(new rook(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
+            pieceToPromote.reset(new rook(tolower(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
             break;
         case 'A':
+            pieceToPromote.reset(new bishop(toupper(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
+            break;
         case 'a':
-            piece.reset(new bishop(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
+            pieceToPromote.reset(new bishop(tolower(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
             break;
         case 'C':
+            pieceToPromote.reset(new knight(toupper(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
+            break;
         case 'c':
-            piece.reset(new knight(pieceName,piece->get_column(),piece->get_row(),piece->get_moves(), piece->get_last_moved()));
+            pieceToPromote.reset(new knight(tolower(pieceName), pieceToPromote->get_column(), pieceToPromote->get_row(), pieceToPromote->get_moves(), pieceToPromote->get_last_moved()));
             break;
         default:
             throw InvalidStateException();
     }
     deleteHistory();
-    return piece;
+    pieceToPromote = nullptr;
+    return pieceToPromote;
 }
 
 bool board::hasNextMove() const {
     std::vector<std::vector<shared_ptr<piece>>> board = std::vector<std::vector<shared_ptr<piece>>>(8,std::vector<shared_ptr<piece>>(8));
     for(auto & blackPiece : blackPieces) {
-        board[blackPiece->get_row()][blackPiece->get_column()] = blackPiece;
+        board[blackPiece->get_column()][blackPiece->get_row()] = blackPiece;
     }
     for(auto & whitePiece : whitePieces){
-        board[whitePiece->get_row()][whitePiece->get_column()] = whitePiece;
+        board[whitePiece->get_column()][whitePiece->get_row()] = whitePiece;
     }
 
+    if(pieceToPromote!= nullptr) throw PromotionException();
     if(isTie(board)) throw MatchTiedException();
     if(isCheckmate(getKing(false),board)) throw CheckmateException();
     if(isCheckmate(getKing(true),board)) throw CheckmateException();
@@ -508,4 +518,16 @@ bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vect
             throw InvalidStateException();
     }
     return false;
+}
+
+bool board::isBlackTurn() {
+    return (turn%2 == 1);
+}
+
+bool board::isBlackToPromote() {
+    return pieceToPromote->get_piece_name()<97;
+}
+
+bool board::isBlackUnderCheck() {
+    return checkedPiece->get_piece_name()<97;
 }

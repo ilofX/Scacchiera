@@ -37,8 +37,11 @@ public:
 
     bool hasNextMove() const;
     void move(short int startColumn, short int startRow, short int endColumn, short int endRow);
-    std::shared_ptr<piece> promotion(short int Column, short int Row, char piece);
+    std::shared_ptr<piece> promotion(char piece);
     std::vector<shared_ptr<piece>> getPieces(char c) const;
+    bool isBlackTurn();
+    bool isBlackToPromote();
+    bool isBlackUnderCheck();
     std::string print();
     bool solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow);
     void clearCheck();
@@ -58,7 +61,8 @@ private:
     static bool isEnemyPiece(const shared_ptr<piece>& piece1, const shared_ptr<piece>& piece2);
 
     std::list<std::shared_ptr<piece>> whitePieces, blackPieces;
-    std::shared_ptr<piece> checkedPiece= nullptr, checkIssuerPiece= nullptr;
+    std::shared_ptr<piece> checkedPiece=nullptr, checkIssuerPiece=nullptr;
+    std::shared_ptr<piece> pieceToPromote=nullptr;
     std::vector<std::string> history;
     int turn=0, tieMoves=0;
 };
