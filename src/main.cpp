@@ -30,6 +30,10 @@ int main(int argc, char* argv[]) {
             try {
 
             }
+            catch (player::InvalidInputException &ex){
+                std::cout << "La stringa inserita non è valida" << std::endl;
+                continue;
+            }
             catch (board::IllegalMoveException &ex) {
                 std::cout << "La mossa richiesta non è valida" << std::endl;
                 continue;

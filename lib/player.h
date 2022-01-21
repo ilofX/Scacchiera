@@ -33,6 +33,8 @@ class player{
 
         class InvalidColorException : public std::exception{};
         class InvalidMoveException : public std::exception{};
+        class InvalidInputException : public std::exception{};
+        class InvalidStateException : public std::exception{};
 
 		//virtual ~player();
 	protected:

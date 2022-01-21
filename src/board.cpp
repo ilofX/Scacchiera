@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <cstring>
 #include "board.h"
 #include "piece.h"
 #include "queen.h"
@@ -17,7 +18,7 @@ board::board() {
     tieMoves=0;
     history = std::vector<std::string>();
     //Generating White Pieces
-    whitePieces.push_back(std::shared_ptr<piece>{new king('r',3,0)});
+    whitePieces.push_back(std::shared_ptr<piece>{new king('r',3, 0)});
     whitePieces.push_back(std::shared_ptr<piece>{new queen('d',4,0)});
     whitePieces.push_back(std::shared_ptr<piece>{new rook('t',0,0)});
     whitePieces.push_back(std::shared_ptr<piece>{new rook('t',7,0)});
@@ -56,12 +57,12 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             if(endRow==startRow && (std::max(endColumn,startColumn)-std::min(endColumn,startColumn))==1){   //En Passant implementation
                 if(endPiece->get_moves()>1 || endPiece->get_last_moved()!=turn-1) throw IllegalMoveException();
                 if(endPiece == nullptr) throw IllegalMoveException();
-                removePiece(endPiece);
+                if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);
             }
             else if(endColumn!=startColumn){ //Eat piece
                 if(endPiece==nullptr) throw IllegalMoveException();
                 if(isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name())) throw IllegalMoveException();
-                removePiece(endPiece);
+                if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);
             }
             else {  //Standard movement
                 if((std::max(startRow,endRow)-std::min(startRow,endRow))==2 && startPiece->is_moved()) throw IllegalMoveException();
@@ -69,7 +70,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
                     shared_ptr<piece> currentPiece = getPiece(startColumn,std::max(startRow,endRow)-i);
                     if(currentPiece!= nullptr) throw IllegalMoveException();
                 }
-                if(endRow==1 || endRow==8){ //Promotion after standard movement
+                if(endRow==0 || endRow==7){ //Promotion after standard movement
                     startPiece->set_position(endColumn,endRow);
                     throw PromotionException();
                 }
@@ -81,13 +82,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
         case 't':
             if(endColumn!=startColumn) {
                 if (endColumn > startColumn) { //Horizontal-Right movement
-                    for (char i=startColumn; i<endColumn; i++) {
+                    for (char i=startColumn+1; i<endColumn; i++) {
                         shared_ptr<piece> currentPiece = getPiece(i, startRow);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
                 }
                 else {  //Horizontal-Left movement
-                    for (char i=startColumn; i>endColumn; i--) {
+                    for (char i=startColumn-1; i>endColumn; i--) {
                         shared_ptr<piece> currentPiece = getPiece( i, startRow);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
@@ -95,13 +96,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else {
                 if(endRow>startRow) { //Vertical-Top movement
-                    for (char i = startRow; i<endRow; i++) {
+                    for (char i = startRow+1; i<endRow; i++) {
                         shared_ptr<piece> currentPiece = getPiece(startColumn, i);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Vertical-Down movement
-                    for (char i = startRow; i>endRow; i--) {
+                    for (char i = startRow-1; i>endRow; i--) {
                         shared_ptr<piece> currentPiece = getPiece(startColumn, i);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
@@ -109,26 +110,26 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
 
             if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
-            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);
             break;
 
         case 'C':
         case 'c':
             if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
-            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);   //Eat Piece
             break;
 
         case 'A':
         case 'a':
             if(endRow>startRow){   //Top Movement
                 if(endColumn>startColumn){   //Top-Right Movement
-                    for(int i=0;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Top-Left Movement
-                    for(int i=0;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -136,33 +137,33 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else{   //Bottom Movement
                 if(endColumn>startColumn){   //Bottom-Right Movement
-                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Bottom-Left Movement
-                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
             }
             if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
-            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);   //Eat Piece
             break;
 
         case 'D':
         case 'd':
             if(endColumn!=startColumn && startRow==endRow) { //Horizontal Movement
                 if (endColumn > startColumn) { //Horizontal-Right movement
-                    for (char i=startColumn; i<endColumn; i++) {
+                    for (char i=startColumn+1; i<endColumn; i++) {
                         shared_ptr<piece> currentPiece = getPiece(i, startRow);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
                 }
                 else {  //Horizontal-Left movement
-                    for (char i=startColumn; i>endColumn; i--) {
+                    for (char i=startColumn-1; i>endColumn; i--) {
                         shared_ptr<piece> currentPiece = getPiece( i, startRow);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
@@ -170,13 +171,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else if(endColumn==startColumn && endRow!=startRow){ //Vertical Movement
                 if(endRow>startRow) { //Vertical-Top movement
-                    for (char i = startRow; i<endRow; i++) {
+                    for (char i = startRow+1; i<endRow; i++) {
                         shared_ptr<piece> currentPiece = getPiece(startColumn, i);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Vertical-Down movement
-                    for (char i = startRow; i>endRow; i--) {
+                    for (char i = startRow-1; i>endRow; i--) {
                         shared_ptr<piece> currentPiece = getPiece(startColumn, i);
                         if (currentPiece != nullptr) throw IllegalMoveException();
                     }
@@ -184,13 +185,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else if(endRow>startRow){   //Top Movement
                 if(endColumn>startColumn){   //Top-Right Movement
-                    for(int i=0;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Top-Left Movement
-                    for(int i=0;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -198,13 +199,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else{   //Bottom Movement
                 if(endColumn>startColumn){   //Bottom-Right Movement
-                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Bottom-Left Movement
-                    for(int i=0;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn)-1;i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -212,13 +213,13 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
 
             if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
-            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);   //Eat Piece
+            if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);   //Eat Piece
             break;
 
         case 'R':
         case 'r':
             if(startRow==endRow && endColumn-startColumn==2){   //Arrocco Lungo(Left)
-                shared_ptr<piece> rightRook = getPiece(8,(startPiece->get_piece_name()>97) ? 1 : 8);
+                shared_ptr<piece> rightRook = getPiece(7,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
                 if(rightRook!= nullptr && rightRook->is_moved()) throw IllegalMoveException();
                 for(short int i=startColumn;i<rightRook->get_column();i++){
@@ -228,7 +229,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
                 rightRook->set_position(endColumn-1,startRow);
             }
             else if(startRow==endRow && startColumn-endColumn==2){ //Arrocco Corto(Right)
-                shared_ptr<piece> leftRook = getPiece(1,(startPiece->get_piece_name()>97) ? 1 : 8);
+                shared_ptr<piece> leftRook = getPiece(0,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
                 if(leftRook!= nullptr && leftRook->is_moved()) throw IllegalMoveException();
                 for(short int i=startColumn;i<leftRook->get_column();i++){
@@ -239,7 +240,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else{   //Standard Movement
                 if(endPiece!= nullptr && (isupper(startPiece->get_piece_name())==isupper(endPiece->get_piece_name()))) throw IllegalMoveException();
-                if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='K')) removePiece(endPiece);
+                if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);
             }
 
             break;
@@ -255,14 +256,15 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
 
 std::string board::print() {
     std::string ris;
-    char matr[8][8] {' '};
+    char matr[8][8];
+    memset(matr,' ',sizeof(matr));
     ris+='\n';
     for(auto & blackPiece : blackPieces) {
         //Debug statement //std::cout << std::endl << "Pezzo: " << blackPiece->get_piece_name() << " colonna: " << blackPiece->get_column()-1 << " riga: " << blackPiece->get_row()-1 << std::endl;
-        matr[blackPiece->get_row()][blackPiece->get_column()] = blackPiece->get_piece_name();
+        matr[blackPiece->get_column()][blackPiece->get_row()] = blackPiece->get_piece_name();
     }
     for(auto & whitePiece : whitePieces){
-        matr[whitePiece->get_row()][whitePiece->get_column()] = whitePiece->get_piece_name();
+        matr[whitePiece->get_column()][whitePiece->get_row()] = whitePiece->get_piece_name();
     }
     for(int i=7; i>=0; i--){
         ris+=to_string(i+1)+" ";
@@ -344,7 +346,7 @@ bool board::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
 }
 
 void board::removePiece(const std::shared_ptr<piece>& removePiece){
-    if(removePiece->get_piece_name()>97){
+    if(removePiece->get_piece_name()>=97){
         whitePieces.remove(removePiece);
     }
     else{
@@ -380,7 +382,7 @@ shared_ptr<piece> board::getKing(bool isBlack) const {
 }
 
 shared_ptr<piece> board::getPiece(short int column, short int row) {
-    if(column>8 || row>8) throw IllegalCoordinatesException();
+    if(column>7 || row>7 || column<0 || row<0 ) throw IllegalCoordinatesException();
 
     for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
         if(((*iterB)->get_column()== column) && ((*iterB)->get_row() == row)) return *iterB;

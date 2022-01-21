@@ -8,7 +8,7 @@ human::human(char n, board& t) : player(n, t) {}
 
 bool human::move(string s){
     if(!is_valid_input(s)){
-        throw IllegalInputException();
+        throw player::InvalidInputException();
     }else if(is_display_input(s)){
             this->scacchiera.print();
             return false;
