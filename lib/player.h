@@ -18,7 +18,6 @@ class player{
 		player(char n, board& t);
 
 		char get_color();
-		board get_board();
 
 		bool is_valid_input(string s);
 		bool is_display_input(string s);
@@ -32,7 +31,7 @@ class player{
 		class InvalidInputException : public std::exception{};
 		class InvalidStateException : public std::exception{};
 
-	private:
+	protected:
 		char color;
 		board& scacchiera;
 };

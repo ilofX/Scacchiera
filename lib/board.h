@@ -63,7 +63,7 @@ private:
     std::list<std::shared_ptr<piece>> whitePieces, blackPieces;
     std::shared_ptr<piece> checkedPiece=nullptr, checkIssuerPiece=nullptr;
     std::shared_ptr<piece> pieceToPromote=nullptr;
-    std::vector<std::string> history;
+    std::vector<std::string> history = std::vector<std::string>();
     int turn=0, tieMoves=0;
 };
 

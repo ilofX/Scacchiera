@@ -1,5 +1,5 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolï¿½ Tesser on 22/12/2021
 //
 #ifndef PIECE_H
 #define PIECE_H
@@ -36,7 +36,7 @@ class piece{
 		virtual bool is_valid_final_pos(short int c, short int r) = 0;
 
 		//virtual ~piece() = 0;
-	private:
+    protected:
 		int moves,last_moved;
 		char piece_name; //il char permette anche la distinzione dei pezzi bianchi (lettere minuscole) da quelli neri (lettere maiuscole)
 		short int column, row;

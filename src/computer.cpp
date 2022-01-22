@@ -10,7 +10,7 @@ computer::computer(char n, board& t) : player(n, t){}
 shared_ptr<piece> computer::get_random_piece(char c){
 	srand(time(0));
 	if(c == 'b' || c == 'B' || c == 'w' || c == 'W'){
-		vector<shared_ptr<piece>> v = get_board().getPieces(c);
+		vector<shared_ptr<piece>> v = scacchiera.getPieces(c);
 		int r = std::rand()%(v.size());
 		return v[r];
 	}else{
@@ -113,6 +113,6 @@ bool computer::move(string s){
 	shared_ptr<piece> p = get_random_piece(this->get_color());
 	short int ec = get_random_col(p);
 	short int er = get_random_row(p);
-	get_board().move(p->get_column(), p->get_row(), ec, er);
+	scacchiera.move(p->get_column(), p->get_row(), ec, er);
 	return true;
 }

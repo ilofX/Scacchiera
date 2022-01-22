@@ -2,6 +2,7 @@
 //Created by Nicolo' Tesser on 22/12/2021
 //
 
+#include <iostream>
 #include "player.h"
 
 player::player(char n, board& t) : color{n},scacchiera{t} {
@@ -16,9 +17,6 @@ char player::get_color(){
 	return color;
 }
 
-board player::get_board(){
-	return scacchiera;
-}
 
 bool player::is_valid_input(string s){
 	if(s.length() == 5 && s[2] == ' ' && tolower((int)s[0]) >= 97 && tolower((int)s[0]) <= 104 && s[1] >= 49 && s[1] <= 56 && tolower((int)s[3]) >= 96 && tolower((int)s[3]) <= 104 && s[4] >= 49 && s[4] <= 56){

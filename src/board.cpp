@@ -2,6 +2,7 @@
 // Created by Filippo Stella 2052644 on 22/12/2021.
 //
 
+#include <iostream>
 #include <algorithm>
 #include <cstring>
 #include "board.h"
@@ -66,7 +67,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else {  //Standard movement
                 if((std::max(startRow,endRow)-std::min(startRow,endRow))==2 && startPiece->is_moved()) throw IllegalMoveException();
-                for (int i=(std::max(startRow,endRow)-std::min(startRow,endRow));i>=0;i--){
+                for (int i=(std::max(startRow,endRow)-std::min(startRow,endRow))-1;i>=0;i--){
                     shared_ptr<piece> currentPiece = getPiece(startColumn,std::max(startRow,endRow)-i);
                     if(currentPiece!= nullptr) throw IllegalMoveException();
                 }
@@ -405,7 +406,7 @@ shared_ptr<piece> board::getPiece(short int column, short int row) {
 }
 
 std::vector<shared_ptr<piece>> board::getPieces(char c) const {
-    std::vector<shared_ptr<piece>> ris;
+    std::vector<shared_ptr<piece>> ris = std::vector<shared_ptr<piece>>((c == 'b' || c == 'B')?blackPieces.size():whitePieces.size());
     if(c == 'b' || c == 'B')   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
     else std::copy(whitePieces.begin(),whitePieces.end(), ris.begin());
     return ris;
@@ -521,7 +522,7 @@ bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vect
 }
 
 bool board::isBlackTurn() {
-    return (turn%2 == 1);
+    return (this->turn%2);
 }
 
 bool board::isBlackToPromote() {

@@ -26,7 +26,8 @@ int main(int argc, char* argv[]) {
     }
     else if(argv[1][0]=='-' && argv[1][1]=='p' && argv[1][2]=='c'){ //Player vs Computer
         //Debug statement std::cout << "Human vs Computer" << std::endl;
-        if(std::rand()%2==1){
+        //if(std::rand()%2==1){
+        if(true){
             std::cout << "Al giocatore umano sono stati assegnati i pezzi BIANCHI" << std::endl;
             whitePlayer = std::make_unique<human>('W', tabellone);
             blackPlayer = std::make_unique<computer>('B', tabellone);
@@ -54,7 +55,7 @@ int main(int argc, char* argv[]) {
                     std::cout << "Muove il giocatore NERO" << std::endl;
                     if(blackPlayer->is_human()){    //Il giocatore NERO è umano
                         std::cout << "inserire le coordinate: ";
-                        cin >> input;
+                        getline(cin,input);
                         blackPlayer->move(input);
                     }
                     else {  //Il giocatore NERO è un computer
@@ -65,20 +66,20 @@ int main(int argc, char* argv[]) {
                     std::cout << "Muove il giocatore BIANCO" << std::endl;
                     if(whitePlayer->is_human()){   //Il giocatore BIANCO è un umano
                         std::cout << "inserire le coordinate: ";
-                        cin >> input;
+                        getline(cin,input);
                         whitePlayer->move(input);
                     }
                     else{   //Il giocaore BIANCO è un computer
-                        blackPlayer->move(input);
+                        whitePlayer->move(input);
                     }
                 }
             }
             catch (player::InvalidInputException &ex){
-                std::cout << "La stringa inserita non è valida" << std::endl;
+                std::cout << "La stringa inserita non e valida" << std::endl;
                 continue;
             }
             catch (board::IllegalMoveException &ex) {
-                std::cout << "La mossa richiesta non è valida" << std::endl;
+                std::cout << "La mossa richiesta non e valida" << std::endl;
                 continue;
             }
             catch (board::IllegalCoordinatesException &ex) {
@@ -114,7 +115,7 @@ int main(int argc, char* argv[]) {
                 std::string input;
                 if((tabellone.isBlackToPromote() && blackPlayer->is_human()) || (!tabellone.isBlackToPromote() && whitePlayer->is_human())){ //The piece to promote is the one of a human player
                     std::cout << "Con che pezzo si vuole promuovere il pedone?\n C=cavallo | T=torre | A=alfiere | D=regina\n Inserire la selezione: ";
-                    cin >> input;
+                    getline(cin,input);
                 }
                 else{   //the piece to promote is the one of a computer
                     if(tabellone.isBlackToPromote()){ //Computer is blackPlayer
@@ -137,11 +138,11 @@ int main(int argc, char* argv[]) {
         exit(-1);
     }
     catch (board::CheckmateException &ex) {
-        std::cout << "La partita è terminata per scacco matto" << std::endl;
+        std::cout << "La partita e terminata per scacco matto" << std::endl;
         exit(40);
     }
     catch (board::MatchTiedException &ex) {
-        std::cout << "La partita è terminata per parità" << std::endl;
+        std::cout << "La partita e terminata per parità" << std::endl;
         exit(50);
     }
     return 0;
