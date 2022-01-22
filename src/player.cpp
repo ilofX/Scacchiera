@@ -21,7 +21,7 @@ board player::get_board(){
 }
 
 bool player::is_valid_input(string s){
-	if(s.length() == 5 && s[2] != ' ' && tolower((int)s[0]) >= 65 && tolower((int)s[0]) <= 72 && s[1] >= 49 &&s[1] <= 56 && tolower((int)s[3]) >= 65 && tolower((int)s[3]) <= 72 && s[4] >= 49 && s[4] <= 56){
+	if(s.length() == 5 && s[2] != ' ' && tolower((int)s[0]) >= 97 && tolower((int)s[0]) <= 104 && s[1] >= 49 && s[1] <= 56 && tolower((int)s[3]) >= 96 && tolower((int)s[3]) <= 104 && s[4] >= 49 && s[4] <= 56){
 		return true;
 	}else{
 		return false;
