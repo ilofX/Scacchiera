@@ -11,6 +11,9 @@ class human : public player{
 	public:
 		human(char n, board& t);
 
+		bool is_valid_input(string s);
+		bool is_display_input(string s);
+
 		bool is_human();
 		vector<short int> convert_input(string s);
 		bool move(string s);

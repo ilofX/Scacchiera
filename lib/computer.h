@@ -13,6 +13,8 @@ class computer : public player{
 
 		bool is_human();
 
+		bool is_valid_input(short int c, short int r);
+
 		shared_ptr<piece> get_random_piece(char c);
 		char get_random_piece_to_promote(char c);
 		short int get_random_col(shared_ptr<piece> p);

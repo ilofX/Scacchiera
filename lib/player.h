@@ -19,9 +19,6 @@ class player{
 
 		char get_color();
 
-		bool is_valid_input(string s);
-		bool is_display_input(string s);
-
 		virtual bool move(string s) = 0;
 
 		virtual bool is_human() = 0;
