@@ -23,9 +23,9 @@ class player{
 		bool is_valid_input(string s);
 		bool is_display_input(string s);
 
-		virtual bool move(string s);
+		virtual bool move(string s) = 0;
 
-		virtual bool is_human();
+		virtual bool is_human() = 0;
 
 		class InvalidColorException : public std::exception{};
 		class InvalidMoveException : public std::exception{};
