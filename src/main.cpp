@@ -118,10 +118,10 @@ int main(int argc, char* argv[]) {
                 }
                 else{   //the piece to promote is the one of a computer
                     if(tabellone.isBlackToPromote()){ //Computer is blackPlayer
-                       input = (dynamic_cast<computer&>(*blackPlayer)).get_random_piece_to_promote();
+                       input = (dynamic_cast<computer&>(*blackPlayer)).get_random_piece_to_promote(blackPlayer->get_color());
                     }
                     else{   //Computer is whitePlayer
-                        input = (dynamic_cast<computer&>(*whitePlayer)).get_random_piece_to_promote();
+                        input = (dynamic_cast<computer&>(*whitePlayer)).get_random_piece_to_promote(whitePlayer->get_color());
                     }
                 }
                 tabellone.promotion(input[0]);

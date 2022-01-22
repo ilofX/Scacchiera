@@ -1,9 +1,10 @@
 //
-// Created by Nicol� Tesser on 22/12/2021
+//Created by Nicolo' Tesser on 22/12/2021
 //
+
 #include "player.h"
 
-player::player(char n, board& t): scacchiera{t} {
+player::player(char n, board& t) : color{n},scacchiera{t} {
 	if(n == 'b' || n == 'w' || n == 'B' || n == 'W'){
 		color = n;
 	}else{
@@ -11,27 +12,16 @@ player::player(char n, board& t): scacchiera{t} {
 	}
 }
 
-/*
-player::player(const player& p) : color{p.color}, scacchiera{p.scacchiera} {}
-
-player::player(player&& p) : color{p.color}, scacchiera{p.scacchiera} {
-	p.color = ' ';
+char player::get_color(){
+	return color;
 }
 
-player& player::operator=(const player& p) {
-	color = p.color;
-	return *this;
+board player::get_board(){
+	return scacchiera;
 }
-
-player& player::operator=(player&& p) {
-	color = p.color;
-	p.color = ' ';
-	return *this;
-}
-*/
 
 bool player::is_valid_input(string s){
-	if(s.length() == 5 && s[2] != ' ' && tolower((int)s[0]) >= 65 && tolower((int)s[0]) <= 72 && s[1] >= 49 && s[1] <= 56 && tolower((int)s[3]) >= 65 && tolower((int)s[3]) <= 72 && s[4] >= 49 && s[4] <= 56){
+	if(s.length() == 5 && s[2] != ' ' && tolower((int)s[0]) >= 65 && tolower((int)s[0]) <= 72 && s[1] >= 49 &&s[1] <= 56 && tolower((int)s[3]) >= 65 && tolower((int)s[3]) <= 72 && s[4] >= 49 && s[4] <= 56){
 		return true;
 	}else{
 		return false;
@@ -47,12 +37,3 @@ bool player::is_display_input(string s){
 		return false;
 	}
 }
-
-
-
-char player::get_color(){
-    return this->color;
-}
-
-
-
