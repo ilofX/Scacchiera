@@ -1,5 +1,5 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolo' Tesser on 22/12/2021
 //
 #ifndef PAWN_H
 #define PAWN_H
@@ -17,6 +17,11 @@ class pawn : public piece{
 
 		//pawn(pawn&& k);
 		//pawn& operator=(pawn&& k);
+        /*
+        vector<short int> eat_move();
+        vector<short int> en_passant_move();
+        vector<short int> step_move();
+        */
 
 		bool is_valid_final_pos(short int c, short int r);
 };

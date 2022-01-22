@@ -24,6 +24,12 @@ int main(int argc, char* argv[]) {
         blackPlayer = std::make_unique<computer>('B', tabellone);
 
     }
+    else if(argv[1][0]=='-' && argv[1][1]=='p' && argv[1][2]=='p'){ //Player vs Player
+        //Debug statement std::cout << "Computer vs Computer" << std::endl;
+        whitePlayer = std::make_unique<human>('W', tabellone);
+        blackPlayer = std::make_unique<human>('B', tabellone);
+
+    }
     else if(argv[1][0]=='-' && argv[1][1]=='p' && argv[1][2]=='c'){ //Player vs Computer
         //Debug statement std::cout << "Human vs Computer" << std::endl;
         //if(std::rand()%2==1){

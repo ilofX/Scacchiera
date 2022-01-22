@@ -1,5 +1,5 @@
 //
-// Created by Nicol� Tesser on 22/12/2021
+// Created by Nicolo' Tesser on 22/12/2021
 //
 #ifndef PIECE_H
 #define PIECE_H
@@ -7,6 +7,7 @@
 #include <string>
 #include <stdexcept>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 

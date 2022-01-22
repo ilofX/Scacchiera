@@ -1,5 +1,5 @@
 //
-// Created by Nicol� Tesser on 22/12/2021
+// Created by Nicolo' Tesser on 22/12/2021
 //
 #include <iostream>
 #include "pawn.h"

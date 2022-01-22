@@ -59,16 +59,17 @@ bool computer::is_valid_input(short int c, short int r){
     if(c > 7 || r > 7 || c < 0 || r < 0){
         return false;
     }else{
-        return false;
+        return true;
     }
 }
 
 short int computer::get_random_col(shared_ptr<piece> p){
-	srand(time(0));
+	//srand(time(0));
 	short int res, r;
 	switch(p->get_piece_name()){
 		case 'R':
 		case 'r':
+            r = -2 + std::rand()%5;
 		case 'P':
 		case 'p':
 			r = -1 + std::rand()%3;
@@ -119,16 +120,18 @@ short int computer::get_random_row(shared_ptr<piece> p){
 
 bool computer::move(string s){
 	shared_ptr<piece> p = get_random_piece(this->get_color());
+    short int ec;
+    short int er;
 
-	while(!(is_valid_input(get_random_col(p)) && is_valid_input(get_random_row(p))){
-            short int ec = get_random_col(p);
-            short int er = get_random_row(p);
+	while(!is_valid_input(get_random_col(p), get_random_row(p))){
+            ec = get_random_col(p);
+            er = get_random_row(p);
 	}
 
     int trials = 0;
     bool done = false;
 
-    while(!done && trials<50 && is_valid_input(ec, er)) {
+    while(!done && trials <= 100 && is_valid_input(ec, er)) {
         try {
             done = scacchiera.move(p->get_column(), p->get_row(), ec, er);
         }
@@ -136,7 +139,7 @@ bool computer::move(string s){
         catch (board::IllegalCoordinatesException &ex) { done = false; }
         trials++;
     }
-    if(!done || trials >= 50) throw player::InvalidMoveException();
+    if(!done || trials > 100) throw player::InvalidMoveException();
 
 	return true;
 }

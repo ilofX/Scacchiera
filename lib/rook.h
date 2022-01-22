@@ -1,5 +1,5 @@
 //
-// Created by Nicolò Tesser on 22/12/2021
+// Created by Nicolo' Tesser on 22/12/2021
 //
 #ifndef ROOK_H
 #define ROOK_H
@@ -17,7 +17,13 @@ class rook : public piece{
 
 		//rook(rook&& k);
 		//rook& operator=(rook&& k);
+/*
+        vector<short int> n_move();
+        vector<short int> e_move();
+        vector<short int> s_move();
+        vector<short int> w_move();
+*/
 
-		bool is_valid_final_pos(short int c, short int r);
+    bool is_valid_final_pos(short int c, short int r);
 };
 #endif
