@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     unique_ptr<player> whitePlayer, blackPlayer;
 
     //Argument checking
-    if(argc<1 || argc>2){
+    if(argc<2 || argc>3){
         exit(1);
     }
     //players creation
