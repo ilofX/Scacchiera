@@ -46,7 +46,7 @@ board::board() {
 
 
 
-void board::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
+bool board::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
     if(startPiece==nullptr) throw IllegalCoordinatesException();
     if(!startPiece->is_valid_final_pos(endColumn,endRow)) throw IllegalCoordinatesException();
@@ -254,6 +254,7 @@ void board::move(short int startColumn, short int startRow, short int endColumn,
     history.push_back(printHistory());
     turn++;
     tieMoves++;
+    return true;
 }
 
 std::string board::print() {

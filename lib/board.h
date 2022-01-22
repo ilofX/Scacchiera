@@ -36,7 +36,7 @@ public:
     class PromotionException: public std::exception{};
 
     bool hasNextMove() const;
-    void move(short int startColumn, short int startRow, short int endColumn, short int endRow);
+    bool move(short int startColumn, short int startRow, short int endColumn, short int endRow);
     std::shared_ptr<piece> promotion(char piece);
     std::vector<shared_ptr<piece>> getPieces(char c) const;
     bool isBlackTurn();

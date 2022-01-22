@@ -78,6 +78,10 @@ int main(int argc, char* argv[]) {
                 std::cout << "La stringa inserita non e valida" << std::endl;
                 continue;
             }
+            catch (player::InvalidMoveException &ex){
+                std::cout << "Il computer non e riuscito a muovere, nuovo tentativo" << std::endl;
+                continue;
+            }
             catch (board::IllegalMoveException &ex) {
                 std::cout << "La mossa richiesta non e valida" << std::endl;
                 continue;

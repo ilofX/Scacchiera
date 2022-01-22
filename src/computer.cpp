@@ -113,6 +113,19 @@ bool computer::move(string s){
 	shared_ptr<piece> p = get_random_piece(this->get_color());
 	short int ec = get_random_col(p);
 	short int er = get_random_row(p);
-	scacchiera.move(p->get_column(), p->get_row(), ec, er);
+
+    int trials=0;
+    bool done=false;
+
+    while(!done && trials<50) {
+        try {
+            done = scacchiera.move(p->get_column(), p->get_row(), ec, er);
+        }
+        catch (board::IllegalMoveException &ex) { done = false; }
+        catch (board::IllegalCoordinatesException &ex) { done = false; }
+        trials++;
+    }
+    if(!done || trials>=50) throw player::InvalidMoveException();
+
 	return true;
 }
