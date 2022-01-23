@@ -34,6 +34,7 @@ public:
     class CheckException: public std::exception{};
     class CheckmateException: public std::exception{};
     class PromotionException: public std::exception{};
+    class InvalidMatchException: public std::exception{};
 
     bool hasNextMove() const;
     bool move(short int startColumn, short int startRow, short int endColumn, short int endRow);

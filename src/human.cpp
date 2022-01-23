@@ -10,7 +10,7 @@ human::human(char n, board& t) : player(n, t){}
 std::string human::move(string s, bool isCheck){
     if(is_display_input(s)){
         std::cout << scacchiera.print() << std::endl;
-        return "";
+        return s;
     }else if(!is_valid_input(s)){
 		throw InvalidInputException();
 	}else{

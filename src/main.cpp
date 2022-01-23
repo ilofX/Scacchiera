@@ -84,7 +84,6 @@ int main(int argc, char* argv[]) {
             }
             catch (player::InvalidMoveException &ex){
                 std::cout << "Il computer non e riuscito a muovere, nuovo tentativo" << std::endl;
-                logger.write_exception("Il computer non e riuscito a muovere, nuovo tentativo");
                 continue;
             }
             catch (board::IllegalMoveException &ex) {
@@ -193,9 +192,9 @@ int main(int argc, char* argv[]) {
                 shared_ptr<piece> newPiece =  tabellone.promotion(input[0]);
 
                 std::string ris;
-                ris.append(reinterpret_cast<const char *>(newPiece->get_column() + 97));
-                ris.append(reinterpret_cast<const char *>(newPiece->get_row() + 48));
-                ris.append(input);
+                ris += static_cast<char>(newPiece->get_column() + 97);
+                ris += static_cast<char>(newPiece->get_row() + 49);
+                ris += input;
                 logger.write_promotion(ris);
             }
             catch (board::InvalidStateException &ex) {
@@ -219,6 +218,11 @@ int main(int argc, char* argv[]) {
         std::cout << "La partita e terminata per parità" << std::endl;
         logger.write_exception("La partita e terminata per parità");
         exit(50);
+    }
+    catch(board::InvalidMatchException &ex){
+        std::cout << "La partita e terminata numero di mosse troppo alto" << std::endl;
+        logger.write_exception("La partita e terminata numero di mosse troppo alto");
+        exit(60);
     }
     return 0;
 }

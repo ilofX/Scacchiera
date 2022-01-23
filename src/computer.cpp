@@ -74,6 +74,7 @@ bool computer::is_valid_input(short int c, short int r){
 std::string computer::move(string s, bool isCheck) {
     bool done = false;
     int trials = 0;
+    short int printCol=-1, printRow=-1;
     vector<short int> v{-1, -1};
     short int r;
     shared_ptr<piece> p = get_random_piece(this->get_color());
@@ -243,6 +244,8 @@ std::string computer::move(string s, bool isCheck) {
             }
         }
         try{
+            printCol = p->get_column();
+            printRow = p->get_row();
             done = this->scacchiera.move(p->get_column(), p->get_row(), v[0], v[1]);
         }
         catch (board::IllegalMoveException &ex) { done = false; }
@@ -251,12 +254,10 @@ std::string computer::move(string s, bool isCheck) {
     }
     if(!done || trials > 50) throw player::InvalidMoveException();
     std::string ris;
-    //sprintf
-    std::cout << p->get_column() + 97;
-    //ris += reinterpret_cast<char *>(p->get_column() + 97);
-    //ris += reinterpret_cast<char *>(p->get_row() + 48);
-    //ris += ' ';
-    //ris += reinterpret_cast<char *>(v[0] + 97);
-    //ris += reinterpret_cast<char *>(v[1]+ 48);
+    ris += static_cast<char>(printCol + 97);
+    ris += static_cast<char>(printRow + 49);
+    ris += ' ';
+    ris += static_cast<char>(v[0] + 97);
+    ris += static_cast<char>(v[1] + 49);
     return ris;
 }

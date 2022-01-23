@@ -236,7 +236,7 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
             if(startRow==endRow && endColumn-startColumn==2){   //Arrocco Lungo(Right)
                 shared_ptr<piece> rightRook = getPiece(7,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
-                if(rightRook!= nullptr && rightRook->is_moved()) throw IllegalMoveException();
+                if(rightRook!= nullptr) if(rightRook->is_moved()) throw IllegalMoveException();
                 for(short int i=startColumn;i<rightRook->get_column();i++){
                     shared_ptr<piece> currPiece = getPiece(i,startRow);
                     if(currPiece!= nullptr) throw IllegalMoveException();
@@ -246,8 +246,8 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
             else if(startRow==endRow && startColumn-endColumn==2){ //Arrocco Corto(Left)
                 shared_ptr<piece> leftRook = getPiece(0,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
-                if(leftRook!= nullptr && leftRook->is_moved()) throw IllegalMoveException();
-                for(short int i=startColumn;i<leftRook->get_column();i++){
+                if(leftRook!= nullptr) if(leftRook->is_moved()) throw IllegalMoveException();
+                for(short int i=startColumn;i>leftRook->get_column();i--){
                     shared_ptr<piece> currPiece = getPiece(i,startRow);
                     if(currPiece!= nullptr) throw IllegalMoveException();
                 }
@@ -289,7 +289,7 @@ std::string board::print() {
         }
         ris+='\n';
     }
-    ris+="\n  ABCDEFGH";
+    ris+="  ABCDEFGH";
     return ris;
 }
 
@@ -329,6 +329,7 @@ std::shared_ptr<piece> board::promotion(char pieceName) {
 }
 
 bool board::hasNextMove() const {
+
     std::vector<std::vector<shared_ptr<piece>>> board = std::vector<std::vector<shared_ptr<piece>>>(8,std::vector<shared_ptr<piece>>(8));
     for(auto & blackPiece : blackPieces) {
         board[blackPiece->get_column()][blackPiece->get_row()] = blackPiece;
@@ -337,6 +338,7 @@ bool board::hasNextMove() const {
         board[whitePiece->get_column()][whitePiece->get_row()] = whitePiece;
     }
 
+    if(turn>500) throw InvalidMatchException();
     if(pieceToPromote!= nullptr) throw PromotionException();
     if(isTie(board)) throw MatchTiedException();
     if(isCheckmate(getKing(false),board)) throw CheckmateException();
