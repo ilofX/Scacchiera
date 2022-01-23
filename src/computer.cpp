@@ -332,11 +332,13 @@ std::string computer::move(string s, bool isCheck) {
         trials++;
     }
     if(!done || trials > 50) throw player::InvalidMoveException();
-    std::string ris = std::string();
-    ris.append(reinterpret_cast<const char *>(p->get_column() + 97));
-    ris.append(reinterpret_cast<const char *>(p->get_row() + 48));
-    ris.append(" ");
-    ris.append(reinterpret_cast<const char *>(v[0] + 97));
-    ris.append(reinterpret_cast<const char *>(v[1]+ 48));
+    std::string ris;
+    //sprintf
+    std::cout << p->get_column() + 97;
+    //ris += reinterpret_cast<char *>(p->get_column() + 97);
+    //ris += reinterpret_cast<char *>(p->get_row() + 48);
+    //ris += ' ';
+    //ris += reinterpret_cast<char *>(v[0] + 97);
+    //ris += reinterpret_cast<char *>(v[1]+ 48);
     return ris;
 }
