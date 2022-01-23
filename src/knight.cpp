@@ -7,14 +7,6 @@ knight::knight(char name, short int c, short int r) : piece(name, c, r){}
 
 knight::knight(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
-//knight::knight(const knight& k) : piece(k){}
-
-//knight::knight(knight&& k) : piece(k){}
-
-//knight& knight::operator=(const knight& k) : piece(k){}
-
-//knight& knight::operator=(knight&& k) : piece(k){}
-
 vector<short int> knight::nne_move(){
     short int ec = get_column() + 1;
     short int er = get_row() - 2;

@@ -17,8 +17,6 @@ class computer : public player{
 
 		shared_ptr<piece> get_random_piece(char c);
 		char get_random_piece_to_promote(char c);
-		short int get_random_col(shared_ptr<piece> p);
-		short int get_random_row(shared_ptr<piece> p);
 
         std::string move(string s, bool isCheck);
 };

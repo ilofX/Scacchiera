@@ -11,13 +11,6 @@ class king : public piece{
 	public:
 		king(char name, short int c, short int r);
 		king(char name, short int c, short int r, int m, int lm);
-		//~king();
-
-		//king(const king& k);
-		//king& operator=(const king& k);
-
-		//king(king&& k);
-		//king& operator=(king&& k);
 
         vector<short int> n_move();
         vector<short int> ne_move();

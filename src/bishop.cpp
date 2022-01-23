@@ -7,14 +7,6 @@ bishop::bishop(char name, short int c, short int r) : piece(name, c, r){}
 
 bishop::bishop(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
-//bishop::bishop(const bishop& k) : piece(k){}
-
-//bishop::bishop(bishop&& k) : piece(k){}
-
-//bishop& bishop::operator=(const bishop& k) : piece(k){}
-
-//bishop& bishop::operator=(bishop&& k) : piece(k){}
-
 vector<short int> bishop::ne_move(){
     short int r = std::rand()%7;
     short int ec = get_column() + r;
