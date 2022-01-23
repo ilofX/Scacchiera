@@ -81,6 +81,9 @@ vector<short int> knight::sww_move(){
 }
 
 bool knight::is_valid_final_pos(short int c, short int r){
+    if(c < 0 || c > 7 || r < 0 || r > 7){
+        return false;
+    }
 	if((abs(r-(this->get_row()))==1 && abs(c-(this->get_column()))==2) || (abs(r-(this->get_row()))==2 && abs(c-(this->get_column()))==1)){
 		return true;
 	}else{

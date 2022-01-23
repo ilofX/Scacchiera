@@ -53,6 +53,9 @@ vector<short int> bishop::sw_move(){
 }
 
 bool bishop::is_valid_final_pos(short int c, short int r){
+    if(c < 0 || c > 7 || r < 0 || r > 7){
+        return false;
+    }
 	if((abs(c-(this->get_column()))==(abs(r-(this->get_row()))))){
 		return true;
 	}else{

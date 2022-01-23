@@ -95,6 +95,9 @@ vector<short int> pawn::step_move(){
 }
 
 bool pawn::is_valid_final_pos(short int c, short int r){
+    if(c < 0 || c > 7 || r < 0 || r > 7){
+        return false;
+    }
 	if(this->get_piece_name() == 'P'){ //pezzo nero
 		if((c-(this->get_column()) == 0 && r-(this->get_row()) == -1) || (abs(c-(this->get_column())) == 1 && r-(this->get_row()) == -1) || (!(this->is_moved()) && c-(this->get_column()) == 0 && r-(this->get_row()) == -2)){
 			return true;

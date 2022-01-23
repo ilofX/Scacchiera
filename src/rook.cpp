@@ -57,6 +57,9 @@ vector<short int> rook::w_move(){
 }
 
 bool rook::is_valid_final_pos(short int c, short int r){
+    if(c < 0 || c > 7 || r < 0 || r > 7){
+        return false;
+    }
 	if((c-(this->get_column()) == 0 && (r >= 0 && r <= 7)) || (r-(this->get_row()) == 0 && (c >= 0 && c <= 7))){
 		return true;
 	}else{

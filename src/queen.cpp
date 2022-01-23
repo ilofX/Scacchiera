@@ -89,6 +89,9 @@ vector<short int> queen::nw_move(){
 }
 
 bool queen::is_valid_final_pos(short int c, short int r){
+    if(c < 0 || c > 7 || r < 0 || r > 7){
+        return false;
+    }
 	if((c-(this->get_column()) == 0 && (r >= 0 && r <= 7)) || (r-(this->get_row()) == 0 && (c >= 0 && c <= 7)) || (abs(c-(this->get_column())) == abs(r-(this->get_row())))){
 		return true;
 	}else{
