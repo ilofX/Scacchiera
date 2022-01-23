@@ -19,7 +19,7 @@ class player{
 
 		char get_color();
 
-		virtual bool move(string s) = 0;
+		virtual std::string move(string s, bool isCheck) = 0;
 
 		virtual bool is_human() = 0;
 

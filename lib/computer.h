@@ -20,7 +20,7 @@ class computer : public player{
 		short int get_random_col(shared_ptr<piece> p);
 		short int get_random_row(shared_ptr<piece> p);
 
-		bool move(string s);
+        std::string move(string s, bool isCheck);
 };
 
 #endif

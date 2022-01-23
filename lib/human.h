@@ -16,7 +16,7 @@ class human : public player{
 
 		bool is_human();
 		vector<short int> convert_input(string s);
-		bool move(string s);
+		std::string move(string s, bool isCheck);
 };
 
 #endif

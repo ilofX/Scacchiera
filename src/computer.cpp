@@ -153,7 +153,7 @@ bool computer::move(string s){
 }
 */
 
-bool computer::move(string s) {
+std::string computer::move(string s, bool isCheck) {
     bool done = false;
     int trials = 0;
     vector<short int> v{-1, -1};
@@ -318,6 +318,12 @@ bool computer::move(string s) {
                 }
                 break;
         }
+        if(isCheck){
+            if(!scacchiera.solvesCheck(p->get_column(), p->get_row(), v[0], v[1])){
+                trials++;
+                continue;
+            }
+        }
         try{
             done = this->scacchiera.move(p->get_column(), p->get_row(), v[0], v[1]);
         }
@@ -328,5 +334,9 @@ bool computer::move(string s) {
     if(!done || trials > 50) throw player::InvalidMoveException();
     std::string ris = std::string();
     ris.append(reinterpret_cast<const char *>(p->get_column() + 97));
+    ris.append(reinterpret_cast<const char *>(p->get_row() + 48));
+    ris.append(" ");
+    ris.append(reinterpret_cast<const char *>(v[0] + 97));
+    ris.append(reinterpret_cast<const char *>(v[1]+ 48));
     return ris;
 }

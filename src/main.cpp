@@ -64,10 +64,10 @@ int main(int argc, char* argv[]) {
                     if(blackPlayer->is_human()){    //Il giocatore NERO è umano
                         std::cout << "inserire le coordinate: ";
                         getline(cin,input);
-                        blackPlayer->move(input);
+                        blackPlayer->move(input, false);
                     }
                     else {  //Il giocatore NERO è un computer
-                        blackPlayer->move(input);
+                        blackPlayer->move(input, false);
                     }
                 }
                 else{   //Turno del giocatore BIANCO
@@ -75,10 +75,10 @@ int main(int argc, char* argv[]) {
                     if(whitePlayer->is_human()){   //Il giocatore BIANCO è un umano
                         std::cout << "inserire le coordinate: ";
                         getline(cin,input);
-                        whitePlayer->move(input);
+                        whitePlayer->move(input, false);
                     }
                     else{   //Il giocaore BIANCO è un computer
-                        whitePlayer->move(input);
+                        whitePlayer->move(input, false);
                     }
                 }
             }

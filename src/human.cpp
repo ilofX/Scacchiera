@@ -7,16 +7,21 @@
 
 human::human(char n, board& t) : player(n, t){}
 
-bool human::move(string s){
+std::string human::move(string s, bool isCheck){
     if(is_display_input(s)){
         std::cout << scacchiera.print() << std::endl;
-        return false;
+        return "";
     }else if(!is_valid_input(s)){
 		throw InvalidInputException();
 	}else{
 		vector<short int> v = convert_input(s);
+        if(isCheck){
+            if(!scacchiera.solvesCheck(v[0], v[1], v[2], v[3])){
+                throw InvalidInputException();
+            }
+        }
 		scacchiera.move(v[0], v[1], v[2], v[3]);
-		return true;
+		return s;
 	}
 }
 
