@@ -8,6 +8,7 @@
 human::human(char n, board& t) : player(n, t){}
 
 std::string human::move(string s, bool isCheck){
+    bool done = false;
     if(is_display_input(s)){
         std::cout << scacchiera.print() << std::endl;
         return s;
@@ -20,7 +21,8 @@ std::string human::move(string s, bool isCheck){
                 throw InvalidInputException();
             }
         }
-		scacchiera.move(v[0], v[1], v[2], v[3]);
+        done = scacchiera.move(v[0], v[1], v[2], v[3]);
+        if(done && isCheck) scacchiera.clearCheck();
 		return s;
 	}
 }
