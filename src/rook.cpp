@@ -15,7 +15,47 @@ rook::rook(char name, short int c, short int r, int m, int lm) : piece(name, c, 
 //rook& rook::operator=(const rook& k) : piece(k){}
 
 //rook& rook::operator=(rook&& k) : piece(k){}
+/*
+vector<short int> rook::n_move(){
+    short int r = std::rand()%7;
+    short int ec = get_column();
+    short int er = get_row() - r;
+    vector<short int> v;
+    v.push_back(ec);
+    v.push_back(er);
+    return v;
+}
 
+vector<short int> rook::e_move(){
+    short int r = std::rand()%7;
+    short int ec = get_column() + r;
+    short int er = get_row();
+    vector<short int> v;
+    v.push_back(ec);
+    v.push_back(er);
+    return v;
+}
+
+vector<short int> rook::s_move(){
+    short int r = std::rand()%7;
+    short int ec = get_column();
+    short int er = get_row() + r;
+    vector<short int> v;
+    v.push_back(ec);
+    v.push_back(er);
+    return v;
+}
+
+vector<short int> rook::w_move(){
+    short int r = std::rand()%7;
+    short int ec = get_column() - r;
+    short int er = get_row();
+    vector<short int> v;
+    v.push_back(ec);
+    v.push_back(er);
+    return v;
+}
+*/
 bool rook::is_valid_final_pos(short int c, short int r){
 	if((c-(this->get_column()) == 0 && (r >= 0 && r <= 7)) || (r-(this->get_row()) == 0 && (c >= 0 && c <= 7))){
 		return true;

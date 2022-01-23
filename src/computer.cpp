@@ -123,7 +123,7 @@ bool computer::move(string s){
     short int ec;
     short int er;
 
-	while(!is_valid_input(get_random_col(p), get_random_row(p))){
+	while(!is_valid_input(ec, er)){
             ec = get_random_col(p);
             er = get_random_row(p);
 	}
