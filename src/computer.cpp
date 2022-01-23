@@ -326,5 +326,7 @@ bool computer::move(string s) {
         trials++;
     }
     if(!done || trials > 50) throw player::InvalidMoveException();
-    return done;
+    std::string ris = std::string();
+    ris.append(reinterpret_cast<const char *>(p->get_column() + 97));
+    return ris;
 }
