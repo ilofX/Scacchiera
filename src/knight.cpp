@@ -14,7 +14,7 @@ knight::knight(char name, short int c, short int r, int m, int lm) : piece(name,
 //knight& knight::operator=(const knight& k) : piece(k){}
 
 //knight& knight::operator=(knight&& k) : piece(k){}
-/*
+
 vector<short int> knight::nne_move(){
     short int ec = get_column() + 1;
     short int er = get_row() - 2;
@@ -79,7 +79,7 @@ vector<short int> knight::sww_move(){
     v.push_back(er);
     return v;
 }
-*/
+
 bool knight::is_valid_final_pos(short int c, short int r){
 	if((abs(r-(this->get_row()))==1 && abs(c-(this->get_column()))==2) || (abs(r-(this->get_row()))==2 && abs(c-(this->get_column()))==1)){
 		return true;

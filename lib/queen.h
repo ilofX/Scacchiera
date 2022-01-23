@@ -17,7 +17,7 @@ class queen : public piece{
 
 		//queen(queen&& k);
 		//queen& operator=(queen&& k);
-        /*
+
         vector<short int> n_move();
         vector<short int> ne_move();
         vector<short int> e_move();
@@ -26,7 +26,7 @@ class queen : public piece{
         vector<short int> sw_move();
         vector<short int> w_move();
         vector<short int> nw_move();
-*/
+
 		bool is_valid_final_pos(short int c, short int r);
 };
 #endif

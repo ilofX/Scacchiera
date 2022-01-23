@@ -14,7 +14,7 @@ king::king(char name, short int c, short int r, int m, int lm) : piece(name, c, 
 //king& king::operator=(const king& k) : piece(k){}
 
 //king& king::operator=(king&& k) : piece(k){}
-/*vector<short int> king::n_move(){
+vector<short int> king::n_move(){
     short int ec = get_column();
     short int er = get_row() - 1;
     vector<short int> v;
@@ -107,7 +107,7 @@ vector<short int> king::castlingW_move(){
     v.push_back(er);
     return v;
 }
-*/
+
 bool king::is_valid_final_pos(short int c, short int r){
 	if((c-(this->get_column()) == 0 && abs(r-(this->get_row())) == 1) || (r-(this->get_row()) == 0 && abs(c-(this->get_column())) == 1) || (abs(c-(this->get_column())) == 1 && abs(r-this->get_row()) == 1) || (!(this->is_moved()) && r-(this->get_row()) == 0 && abs(c-(this->get_column())) == 2)){
 			return true;

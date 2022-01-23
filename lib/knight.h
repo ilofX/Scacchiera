@@ -17,7 +17,7 @@ class knight : public piece{
 
 		//knight(knight&& k);
 		//knight& operator=(knight&& k);
-        /*
+
         vector<short int> nne_move();
         vector<short int> nee_move();
         vector<short int> nnw_move();
@@ -26,7 +26,7 @@ class knight : public piece{
         vector<short int> sse_move();
         vector<short int> ssw_move();
         vector<short int> sww_move();
-*/
+
         bool is_valid_final_pos(short int c, short int r);
 };
 #endif

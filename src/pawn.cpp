@@ -15,7 +15,7 @@ pawn::pawn(char name, short int c, short int r, int m, int lm) : piece(name, c, 
 //pawn& pawn::operator=(const pawn& k) : piece(k){}
 
 //pawn& pawn::operator=(pawn&& k) : piece(k){}
-/*
+
 vector<short int> pawn::eatE_move(){
     short int ec;
     short int er;
@@ -29,6 +29,7 @@ vector<short int> pawn::eatE_move(){
     vector<short int> v;
     v.push_back(ec);
     v.push_back(er);
+    return v;
 }
 
 vector<short int> pawn::eatW_move(){
@@ -44,6 +45,7 @@ vector<short int> pawn::eatW_move(){
     vector<short int> v;
     v.push_back(ec);
     v.push_back(er);
+    return v;
 }
 vector<short int> pawn::en_passantE_move(){
     short int ec;
@@ -58,6 +60,7 @@ vector<short int> pawn::en_passantE_move(){
     vector<short int> v;
     v.push_back(ec);
     v.push_back(er);
+    return v;
 }
 
 vector<short int> pawn::en_passantW_move(){
@@ -73,6 +76,7 @@ vector<short int> pawn::en_passantW_move(){
     vector<short int> v;
     v.push_back(ec);
     v.push_back(er);
+    return v;
 }
 vector<short int> pawn::step_move(){
     short int r = 1 + rand()%2;
@@ -87,8 +91,9 @@ vector<short int> pawn::step_move(){
     vector<short int> v;
     v.push_back(ec);
     v.push_back(er);
+    return v;
 }
-*/
+
 bool pawn::is_valid_final_pos(short int c, short int r){
 	if(this->get_piece_name() == 'P'){ //pezzo nero
 		if((c-(this->get_column()) == 0 && r-(this->get_row()) == -1) || (abs(c-(this->get_column())) == 1 && r-(this->get_row()) == -1) || (!(this->is_moved()) && c-(this->get_column()) == 0 && r-(this->get_row()) == -2)){

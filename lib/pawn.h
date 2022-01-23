@@ -17,13 +17,13 @@ class pawn : public piece{
 
 		//pawn(pawn&& k);
 		//pawn& operator=(pawn&& k);
-        /*
+
         vector<short int> eatE_move();
         vector<short int> eatW_move();
         vector<short int> en_passantE_move();
         vector<short int> en_passantW_move();
         vector<short int> step_move();
-        */
+
 
 		bool is_valid_final_pos(short int c, short int r);
 };

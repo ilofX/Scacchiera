@@ -17,12 +17,12 @@ class rook : public piece{
 
 		//rook(rook&& k);
 		//rook& operator=(rook&& k);
-/*
+
         vector<short int> n_move();
         vector<short int> e_move();
         vector<short int> s_move();
         vector<short int> w_move();
-*/
+
 
     bool is_valid_final_pos(short int c, short int r);
 };

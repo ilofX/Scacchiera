@@ -14,7 +14,7 @@ bishop::bishop(char name, short int c, short int r, int m, int lm) : piece(name,
 //bishop& bishop::operator=(const bishop& k) : piece(k){}
 
 //bishop& bishop::operator=(bishop&& k) : piece(k){}
-/*
+
 vector<short int> bishop::ne_move(){
     short int r = std::rand()%7;
     short int ec = get_column() + r;
@@ -51,7 +51,7 @@ vector<short int> bishop::sw_move(){
     v.push_back(er);
     return v;
 }
-*/
+
 bool bishop::is_valid_final_pos(short int c, short int r){
 	if((abs(c-(this->get_column()))==(abs(r-(this->get_row()))))){
 		return true;
