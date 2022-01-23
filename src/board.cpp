@@ -14,6 +14,9 @@
 #include "rook.h"
 #include "king.h"
 
+/// <summary>
+/// Constructor of the class board, this constructor populates the board with pieces
+/// </summary>
 board::board() {
     turn=0;
     tieMoves=0;
@@ -49,7 +52,9 @@ board::board() {
     //whitePieces.push_back(std::shared_ptr<piece>{new pawn('p', 7, 1)});
 }
 
-
+/// <summary>
+/// This function move a piece on the board checking the move is legal and it is allowed in the current board conditions
+/// </summary>
 bool board::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     shared_ptr<piece> startPiece = getPiece(startColumn,startRow);
     if(startPiece==nullptr) throw IllegalCoordinatesException();
@@ -270,6 +275,9 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
     return true;
 }
 
+/// <summary>
+/// This method prints the board in a string and which is returned to be printed in the main function
+/// </summary>
 std::string board::print() {
     std::string ris;
     char matr[8][8];
@@ -293,6 +301,9 @@ std::string board::print() {
     return ris;
 }
 
+/// <summary>
+/// This method handles the promotion of a pawn wo reached the opposite side of the board
+/// </summary>
 std::shared_ptr<piece> board::promotion(char pieceName) {
     if(pieceToPromote->get_piece_name() != 'P' || pieceToPromote->get_piece_name() != 'p') throw IllegalMoveException();
     switch (pieceName) {
@@ -328,6 +339,10 @@ std::shared_ptr<piece> board::promotion(char pieceName) {
     return pieceToPromote;
 }
 
+/// <summary>
+/// This method checks if there are available moves or if the match is in a particular state.
+/// If that's the case it will throw the appropriate exception and let the main handle it
+/// </summary>
 bool board::hasNextMove() const {
 
     std::vector<std::vector<shared_ptr<piece>>> board = std::vector<std::vector<shared_ptr<piece>>>(8,std::vector<shared_ptr<piece>>(8));
@@ -346,6 +361,9 @@ bool board::hasNextMove() const {
     return true;
 }
 
+/// <summary>
+/// This method check is the conditions to request a tie are met
+/// </summary>
 bool board::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
     if(tieMoves>=50) return true;   //50 moves without moving pawns ore removing pieces
     if(std::count(history.begin(),history.end(),printHistory())>=3) return true; //same situation of the board for three times or more
@@ -372,6 +390,9 @@ bool board::isTie(std::vector<std::vector<shared_ptr<piece>>> &board) const {
     return false;
 }
 
+/// <summary>
+/// This method removes a piece from the board
+/// </summary>
 void board::removePiece(const std::shared_ptr<piece>& removePiece){
     if(removePiece->get_piece_name()>=97){
         whitePieces.remove(removePiece);
@@ -382,10 +403,16 @@ void board::removePiece(const std::shared_ptr<piece>& removePiece){
     deleteHistory();
 }
 
+/// <summary>
+/// This method deletes the vector containing the history of the match
+/// </summary>
 void board::deleteHistory() {
     history.clear();
 }
 
+/// <summary>
+/// This method creates a string who represents the current state of the board
+/// </summary>
 std::string board::printHistory() const{
     std::string ris;
     for(const auto& piece : whitePieces){
@@ -397,6 +424,9 @@ std::string board::printHistory() const{
     return ris;
 }
 
+/// <summary>
+/// This method return the king of the specified side
+/// </summary>
 shared_ptr<piece> board::getKing(bool isBlack) const {
     if(isBlack){
         if((blackPieces.front()->get_piece_name() != 'R')) throw InvalidStateException();
@@ -408,19 +438,9 @@ shared_ptr<piece> board::getKing(bool isBlack) const {
     }
 }
 
-//shared_ptr<piece> board::getPiece(short int column, short int row) {
-//    if(column>7 || row>7 || column<0 || row<0 ) throw IllegalCoordinatesException();
-//
-//    for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
-//        if(((*iterB)->get_column()== column) && ((*iterB)->get_row() == row)) return *iterB;
-//        if(((*iterW)->get_column() == column) && ((*iterW)->get_row() == row)) return *iterW;
-//        if(iterB != blackPieces.end()) iterB++;
-//        if(iterW != whitePieces.end()) iterW++;
-//    }
-//
-//    return nullptr;
-//}
-
+/// <summary>
+/// This method returns the piece at the specified coordinates
+/// </summary>
 shared_ptr<piece> board::getPiece(short int column, short int row) {
     if (column < 0 || column > 7 || row < 0 || row > 7) throw IllegalCoordinatesException();
 
@@ -434,6 +454,9 @@ shared_ptr<piece> board::getPiece(short int column, short int row) {
     return nullptr;
 }
 
+/// <summary>
+/// This method returns a vector containing the pieces of the specified player
+/// </summary>
 std::vector<shared_ptr<piece>> board::getPieces(char c) const {
     std::vector<shared_ptr<piece>> ris = std::vector<shared_ptr<piece>>((c == 'b' || c == 'B')?blackPieces.size():whitePieces.size());
     if(c == 'b' || c == 'B')   std::copy(blackPieces.begin(), blackPieces.end(), ris.begin());
@@ -441,6 +464,9 @@ std::vector<shared_ptr<piece>> board::getPieces(char c) const {
     return ris;
 }
 
+/// <summary>
+/// This method checks if a specified move solves the check state a player might be in
+/// </summary>
 bool board::solvesCheck(short int startColumn, short int startRow, short int endColumn, short int endRow) {
     if((checkedPiece->get_column()==startColumn && checkedPiece->get_row()==startRow) && endColumn==startColumn+1 || endRow==startRow+1) return true; //The king Moves
     if((std::isupper(getPiece(startColumn,startRow)->get_piece_name())!=std::isupper(checkIssuerPiece->get_piece_name())) && (endColumn==checkIssuerPiece->get_column() && endRow==checkIssuerPiece->get_row())) return true; //The check Isuuer is removed
@@ -472,24 +498,31 @@ bool board::solvesCheck(short int startColumn, short int startRow, short int end
     return false;
 }
 
+/// <summary>
+/// This method clears the checked state the board is in
+/// </summary>
 void board::clearCheck() {
     checkIssuerPiece = nullptr;
     checkedPiece = nullptr;
 }
 
+/// <summary>
+/// This function checks if a considered piece is a piece of mine or of the opponent
+/// </summary>
 bool board::isEnemyPiece(const shared_ptr<piece> &piece1, const shared_ptr<piece> &piece2) {
     if(piece1 == nullptr || piece2 == nullptr) return false;
     if(std::isupper(piece1->get_piece_name())==std::isupper(piece2->get_piece_name())) return true;
     return false;
 }
 
-
+/// <summary>
+/// This method checks if a specified piece has available moves
+/// </summary>
 bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vector<std::shared_ptr<piece>>> &board) const {
     if(pieceToCheck == nullptr) throw InvalidStateException();
     switch (pieceToCheck->get_piece_name()){
         case 'R':
         case 'r':
-            //Non devo controllare per arrocco perchè comunque deve essere libera la casella adiacente al re per eseguire l'arrocco
         case 'D':
         case 'd':
             //Horizontal and Vertical checks
@@ -535,6 +568,10 @@ bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vect
             if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()-1)==nullptr) return true;
             if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()-1))) return true;
             if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()-1))) return true;
+
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()))) return true;
+            if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()+1).at(pieceToCheck->get_row()))) return true;
+            break;
         case 'p':
             if(board.at(pieceToCheck->get_column()).at(pieceToCheck->get_row()+1)==nullptr) return true;
             if(isEnemyPiece(pieceToCheck,board.at(pieceToCheck->get_column()-1).at(pieceToCheck->get_row()+1))) return true;
@@ -550,14 +587,23 @@ bool board::canMove(const shared_ptr<piece> &pieceToCheck, std::vector<std::vect
     return false;
 }
 
+/// <summary>
+/// This method checks who is the player who should move in this turn
+/// </summary>
 bool board::isBlackTurn() {
     return (this->turn%2);
 }
 
+/// <summary>
+/// This method checks if the piece that needs to be promoted is black or not
+/// </summary>
 bool board::isBlackToPromote() {
     return pieceToPromote->get_piece_name()<97;
 }
 
+/// <summary>
+/// This method checks if the piece under check is black or not
+/// </summary>
 bool board::isBlackUnderCheck() {
     return checkedPiece->get_piece_name()<97;
 }

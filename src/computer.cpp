@@ -268,6 +268,7 @@ std::string computer::move(string s, bool isCheck) {
         catch (board::IllegalCoordinatesException &ex) { done = false; }
         trials++;
     }
+    if(done && isCheck) scacchiera.clearCheck();
     if(!done || trials > 50) throw player::InvalidMoveException();
     std::string ris;
     ris += static_cast<char>(printCol + 97);
