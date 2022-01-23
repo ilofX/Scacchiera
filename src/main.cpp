@@ -6,12 +6,14 @@
 #include "player.h"
 #include "computer.h"
 #include "human.h"
+#include "writer.h"
 
 int main(int argc, char* argv[]) {
     srand(time(nullptr));
 
     board tabellone = board();
     unique_ptr<player> whitePlayer, blackPlayer;
+    writer logger = writer("log.txt");
 
     //Argument checking
     if(argc<2 || argc>3){

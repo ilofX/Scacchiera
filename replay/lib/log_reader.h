@@ -2,7 +2,8 @@
 // Created by Francesca Damian
 //
 
-#pragma once
+#ifndef LOG_READER_H
+#define LOG_READER_H
 
 #include <iostream>
 #include <fstream>
@@ -46,3 +47,5 @@ private:
 
 	void calc_coords(std::string move_str);
 };
+
+#endif

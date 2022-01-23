@@ -2,7 +2,8 @@
 // Created by Francesca Damian
 //
 
-#pragma once
+#ifndef LOG_WRITER_H
+#define LOG_WRITER_H
 
 #include <iostream>
 #include <string>
@@ -17,3 +18,5 @@ public:
 private:
     std::ofstream output_file;
 };
+
+#endif

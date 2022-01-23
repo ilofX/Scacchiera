@@ -70,10 +70,19 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
                 if(endPiece!= nullptr && (endPiece->get_piece_name()!='K' || endPiece->get_piece_name()!='k')) removePiece(endPiece);
             }
             else {  //Standard movement
-                if((std::max(startRow,endRow)-std::min(startRow,endRow))==2 && startPiece->is_moved()) throw IllegalMoveException();
-                for (int i=(std::max(startRow,endRow)-std::min(startRow,endRow))-1;i>=0;i--){
-                    shared_ptr<piece> currentPiece = getPiece(startColumn,std::max(startRow,endRow)-i);
-                    if(currentPiece!= nullptr) throw IllegalMoveException();
+                if((std::max(startRow,endRow)-std::min(startRow,endRow))>=2 && startPiece->is_moved()) throw IllegalMoveException();
+                if(startPiece->get_piece_name()=='P'){  //Moving Black pawn (Downwards Movement)
+                    for (int i=startRow-1;i>=endRow;i--){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn,i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+                }
+                else{   //Moving White Pawn (Upper Movement)
+                    for (int i=startRow+1;i<=endRow;i++){
+                        shared_ptr<piece> currentPiece = getPiece(startColumn,i);
+                        if(currentPiece!= nullptr) throw IllegalMoveException();
+                    }
+
                 }
                 if(endRow==0 || endRow==7){ //Promotion after standard movement
                     startPiece->set_position(endColumn,endRow);
@@ -224,7 +233,7 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
 
         case 'R':
         case 'r':
-            if(startRow==endRow && endColumn-startColumn==2){   //Arrocco Lungo(Left)
+            if(startRow==endRow && endColumn-startColumn==2){   //Arrocco Lungo(Right)
                 shared_ptr<piece> rightRook = getPiece(7,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
                 if(rightRook!= nullptr && rightRook->is_moved()) throw IllegalMoveException();
@@ -234,7 +243,7 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
                 }
                 rightRook->set_position(endColumn-1,startRow);
             }
-            else if(startRow==endRow && startColumn-endColumn==2){ //Arrocco Corto(Right)
+            else if(startRow==endRow && startColumn-endColumn==2){ //Arrocco Corto(Left)
                 shared_ptr<piece> leftRook = getPiece(0,(startPiece->get_piece_name()>=97) ? 0 : 7);
                 if(startPiece->is_moved()) throw IllegalMoveException();
                 if(leftRook!= nullptr && leftRook->is_moved()) throw IllegalMoveException();

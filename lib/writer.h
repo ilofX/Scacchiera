@@ -2,7 +2,8 @@
 // Created by Francesca Damian
 //
 
-#pragma once
+#ifndef WRITER_H
+#define WRITER_H
 
 #include <iostream>
 #include <string>
@@ -30,3 +31,5 @@ private:
     std::string move_formatter(std::string unformatted_str);
     void write_log_start();
 };
+
+#endif
