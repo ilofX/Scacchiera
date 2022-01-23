@@ -15,5 +15,5 @@ add_library(replay_IO replay/lib/log_reader.h replay/src/log_reader.cpp replay/l
 add_executable(Scacchiera src/main.cpp)
 add_executable(Replay replay/src/main.cpp)
 
-target_link_libraries(Scacchiera tabellone pieces giocatori)
+target_link_libraries(Scacchiera tabellone pieces giocatori chess_IO)
 target_link_libraries(Replay tabellone pieces replay_IO)

@@ -138,13 +138,13 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
         case 'a':
             if(endRow>startRow){   //Top Movement
                 if(endColumn>startColumn){   //Top-Right Movement
-                    for(int i=1;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Top-Left Movement
-                    for(int i=1;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -152,13 +152,13 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else{   //Bottom Movement
                 if(endColumn>startColumn){   //Bottom-Right Movement
-                    for(int i=1;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Bottom-Left Movement
-                    for(int i=1;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -200,13 +200,13 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else if(endRow>startRow){   //Top Movement
                 if(endColumn>startColumn){   //Top-Right Movement
-                    for(int i=1;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Top-Left Movement
-                    for(int i=1;i<(endRow-startRow)-1;i++){
+                    for(int i=1;i<(endRow-startRow);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow+i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
@@ -214,13 +214,13 @@ bool board::move(short int startColumn, short int startRow, short int endColumn,
             }
             else{   //Bottom Movement
                 if(endColumn>startColumn){   //Bottom-Right Movement
-                    for(int i=1;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn+i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
                 }
                 else{   //Bottom-Left Movement
-                    for(int i=1;i<(endColumn-startColumn)-1;i++){
+                    for(int i=1;i<(endColumn-startColumn);i++){
                         shared_ptr<piece> currentPiece = getPiece(startColumn-i,startRow-i);
                         if(currentPiece!= nullptr) throw IllegalMoveException();
                     }
