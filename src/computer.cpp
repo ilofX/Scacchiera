@@ -117,7 +117,7 @@ short int computer::get_random_row(shared_ptr<piece> p){
 	res = r + p->get_row();
 	return res;
 }
-
+/*
 bool computer::move(string s){
 	shared_ptr<piece> p = get_random_piece(this->get_color());
     short int ec;
@@ -142,4 +142,125 @@ bool computer::move(string s){
     if(!done || trials > 100) throw player::InvalidMoveException();
 
 	return true;
+}
+*/
+
+bool computer::move(string s) {
+    vector<short int> v{0, 0};
+    short int r;
+    while (!is_valid_input(v[0], v[1])) {
+        shared_ptr<piece> p = get_random_piece(this->get_color());
+        switch (p->get_piece_name()) {
+            case 'R':
+            case 'r':
+                r = std::rand() % 10;
+                switch (r) {
+                    case 1:
+                        v = p->n_move();
+                    case 2:
+                        v = p->ne_move();
+                    case 3:
+                        v = p->e_move();
+                    case 4:
+                        v = p->se_move();
+                    case 5:
+                        v = p->s_move();
+                    case 6:
+                        v = p->sw_move();
+                    case 7:
+                        v = p->w_move();
+                    case 8:
+                        v = p->nw_move();
+                    case 9:
+                        v = p->castlingE_move();
+                    case 10:
+                        v = p->castlingW_move();
+                }
+
+            case 'D':
+            case 'd':
+                r = std::rand() % 8;
+                switch (r) {
+                    case 1:
+                        v = p->n_move();
+                    case 2:
+                        v = p->ne_move();
+                    case 3:
+                        v = p->e_move();
+                    case 4:
+                        v = p->se_move();
+                    case 5:
+                        v = p->s_move();
+                    case 6:
+                        v = p->sw_move();
+                    case 7:
+                        v = p->w_move();
+                    case 8:
+                        v = p->nw_move();
+                }
+            case 'T':
+            case 't':
+                r = std::rand() % 4;
+                switch (r) {
+                    case 1:
+                        v = p->n_move();
+                    case 2:
+                        v = p->e_move();
+                    case 3:
+                        v = p->s_move();
+                    case 4:
+                        v = p->w_move();
+                }
+            case 'A':
+            case 'a':
+                r = std::rand() % 4;
+                switch (r) {
+                    case 1:
+                        v = p->ne_move();
+                    case 2:
+                        v = p->nw_move();
+                    case 3:
+                        v = p->se_move();
+                    case 4:
+                        v = p->sw_move();
+                }
+            case 'C':
+            case 'c':
+                r = std::rand() % 8;
+                switch (r) {
+                    case 1:
+                        v = p->nne_move();
+                    case 2:
+                        v = p->nee_move();
+                    case 3:
+                        v = p->see_move();
+                    case 4:
+                        v = p->sse_move();
+                    case 5:
+                        v = p->ssw_move();
+                    case 6:
+                        v = p->sww_move();
+                    case 7:
+                        v = p->nww_move();
+                    case 8:
+                        v = p->nnw_move();
+                }
+
+            case 'P':
+            case 'p':
+                r = std::rand() % 5;
+                switch (r) {
+                    case 1:
+                        v = p->eatE_move();
+                    case 2:
+                        v = p->eatW_move();
+                    case 3:
+                        v = p->en_passantE_move();
+                    case 4:
+                        v = p->en_passantW_move();
+                    case 5:
+                        v = p->step_move();
+                }
+        }
+    }
 }
