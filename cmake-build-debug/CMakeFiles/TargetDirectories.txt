@@ -1,6 +1,0 @@
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/tabellone.dir
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/giocatori.dir
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/pieces.dir
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/Scacchiera.dir
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/Desktop/Scacchiera/cmake-build-debug/CMakeFiles/rebuild_cache.dir

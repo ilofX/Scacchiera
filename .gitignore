@@ -33,6 +33,7 @@
 
 # Build-Directory
 /cmake-build-debug-mingw/
+/cmake-build-debug/
 
 # JetBrains Enviroment Folder
 /.idea/
