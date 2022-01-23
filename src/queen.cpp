@@ -7,14 +7,6 @@ queen::queen(char name, short int c, short int r) : piece(name, c, r){}
 
 queen::queen(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
-//queen::queen(const queen& k) : piece(k){}
-
-//queen::queen(queen&& k) : piece(k){}
-
-//queen& queen::operator=(const queen& k) : piece(k){}
-
-//queen& queen::operator=(queen&& k) : piece(k){}
-
 vector<short int> queen::n_move(){
     short int r = std::rand()%7;
     short int ec = get_column();

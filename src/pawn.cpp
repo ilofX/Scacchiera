@@ -8,14 +8,6 @@ pawn::pawn(char name, short int c, short int r) : piece(name, c, r){}
 
 pawn::pawn(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
-//pawn::pawn(const pawn& k) : piece(k){}
-
-//pawn::pawn(pawn&& k) : piece(k){}
-
-//pawn& pawn::operator=(const pawn& k) : piece(k){}
-
-//pawn& pawn::operator=(pawn&& k) : piece(k){}
-
 vector<short int> pawn::eatE_move(){
     short int ec;
     short int er;

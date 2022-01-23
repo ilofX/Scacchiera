@@ -10,13 +10,6 @@ class knight : public piece{
 	public:
 		knight(char name, short int c, short int r);
 		knight(char name, short int c, short int r, int m, int lm);
-		//~knight();
-
-		//knight(const knight& k);
-		//knight& operator=(const knight& k);
-
-		//knight(knight&& k);
-		//knight& operator=(knight&& k);
 
         vector<short int> nne_move();
         vector<short int> nee_move();

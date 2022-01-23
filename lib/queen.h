@@ -10,13 +10,6 @@ class queen : public piece{
 	public:
 		queen(char name, short int c, short int r);
 		queen(char name, short int c, short int r, int m, int lm);
-		//~queen();
-
-		//queen(const queen& k);
-		//queen& operator=(const queen& k);
-
-		//queen(queen&& k);
-		//queen& operator=(queen&& k);
 
         vector<short int> n_move();
         vector<short int> ne_move();

@@ -15,13 +15,7 @@ class piece{
 	public:
 		piece(char name, short int c, short int r);
         piece(char name, short int c, short int r, int m, int lm);
-/*
-		piece(const piece& p); //costruttore copia
-		piece(piece&& p); //costruttore spostamento
 
-		piece& operator=(const piece& p); //assegnamento copia
-		piece& operator=(piece&& p); //assegnamento di spostamkento
-*/
 		short int get_column() const;
 		short int get_row() const;
         int get_moves() const;
@@ -36,7 +30,6 @@ class piece{
 
 		virtual bool is_valid_final_pos(short int c, short int r) = 0;
 
-		//virtual ~piece() = 0;
     protected:
 		int moves,last_moved;
 		char piece_name; //il char permette anche la distinzione dei pezzi bianchi (lettere minuscole) da quelli neri (lettere maiuscole)

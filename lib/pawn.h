@@ -10,13 +10,6 @@ class pawn : public piece{
 	public:
 		pawn(char name, short int c, short int r);
 		pawn(char name, short int c, short int r, int m, int lm);
-		//~pawn();
-
-		//pawn(const pawn& k);
-		//pawn& operator=(const pawn& k);
-
-		//pawn(pawn&& k);
-		//pawn& operator=(pawn&& k);
 
         vector<short int> eatE_move();
         vector<short int> eatW_move();

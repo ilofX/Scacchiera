@@ -7,13 +7,6 @@ king::king(char name, short int c, short int r) : piece(name, c, r){}
 
 king::king(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
-//king::king(const king& k) : piece(k){}
-
-//king::king(king&& k) : piece(k){}
-
-//king& king::operator=(const king& k) : piece(k){}
-
-//king& king::operator=(king&& k) : piece(k){}
 vector<short int> king::n_move(){
     short int ec = get_column();
     short int er = get_row() - 1;
