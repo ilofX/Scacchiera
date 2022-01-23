@@ -42,8 +42,12 @@ board::board() {
         blackPieces.push_back(std::shared_ptr<piece>{new pawn('P',i,6)});
     }
     history.push_back(printHistory());
-}
 
+    //change 8 on line 40 to 7 and uncomment the line below, this simulate a situation where blackPieces number != whitePieces number
+    //an exception will be trown if you use the function getPiece()
+    //so i changed the implementation of that function, the original is commented above the new one
+    //whitePieces.push_back(std::shared_ptr<piece>{new pawn('p', 7, 1)});
+}
 
 
 bool board::move(short int startColumn, short int startRow, short int endColumn, short int endRow) {
@@ -276,7 +280,7 @@ std::string board::print() {
         }
         ris+='\n';
     }
-    ris+="  ABCDEFGH";
+    ris+="\n  ABCDEFGH";
     return ris;
 }
 
@@ -393,14 +397,27 @@ shared_ptr<piece> board::getKing(bool isBlack) const {
     }
 }
 
-shared_ptr<piece> board::getPiece(short int column, short int row) {
-    if(column>7 || row>7 || column<0 || row<0 ) throw IllegalCoordinatesException();
+//shared_ptr<piece> board::getPiece(short int column, short int row) {
+//    if(column>7 || row>7 || column<0 || row<0 ) throw IllegalCoordinatesException();
+//
+//    for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
+//        if(((*iterB)->get_column()== column) && ((*iterB)->get_row() == row)) return *iterB;
+//        if(((*iterW)->get_column() == column) && ((*iterW)->get_row() == row)) return *iterW;
+//        if(iterB != blackPieces.end()) iterB++;
+//        if(iterW != whitePieces.end()) iterW++;
+//    }
+//
+//    return nullptr;
+//}
 
-    for (auto iterB = blackPieces.begin(), iterW =  whitePieces.begin(); iterB != blackPieces.end() && iterW != whitePieces.end();){
-        if(((*iterB)->get_column()== column) && ((*iterB)->get_row() == row)) return *iterB;
-        if(((*iterW)->get_column() == column) && ((*iterW)->get_row() == row)) return *iterW;
-        if(iterB != blackPieces.end()) iterB++;
-        if(iterW != whitePieces.end()) iterW++;
+shared_ptr<piece> board::getPiece(short int column, short int row) {
+    if (column < 0 || column > 7 || row < 0 || row > 7) throw IllegalCoordinatesException();
+
+    for (shared_ptr<piece> piece : blackPieces) {
+        if (piece->get_column() == column && piece->get_row() == row) return piece;
+    }
+    for (shared_ptr<piece> piece : whitePieces) {
+        if (piece->get_column() == column && piece->get_row() == row) return piece;
     }
 
     return nullptr;
