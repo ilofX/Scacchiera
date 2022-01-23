@@ -328,7 +328,7 @@ std::shared_ptr<piece> board::promotion(char pieceName) {
     return pieceToPromote;
 }
 
-bool board::hasNextMove() const {
+bool board::hasNextMove() {
     std::vector<std::vector<shared_ptr<piece>>> board = std::vector<std::vector<shared_ptr<piece>>>(8,std::vector<shared_ptr<piece>>(8));
     for(auto & blackPiece : blackPieces) {
         board[blackPiece->get_column()][blackPiece->get_row()] = blackPiece;
