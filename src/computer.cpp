@@ -15,6 +15,9 @@
 
 computer::computer(char n, board& t) : player(n, t){}
 
+/// <summary>
+/// used to choose a random piece from the pices list passing the player's color
+/// </summary>
 shared_ptr<piece> computer::get_random_piece(char c){
 	srand(time(0));
 	if(c == 'b' || c == 'B' || c == 'w' || c == 'W'){
@@ -26,6 +29,9 @@ shared_ptr<piece> computer::get_random_piece(char c){
 	}
 }
 
+/// <summary>
+/// used to find a possible promotion piece
+/// </summary>
 char computer::get_random_piece_to_promote(char c){
 	srand(time(0));
 	char ret;
@@ -59,10 +65,16 @@ char computer::get_random_piece_to_promote(char c){
 	return ret;
 }
 
+/// <summary>
+/// used to know if the player is human or computer
+/// </summary>
 bool computer::is_human(){
 	return false;
 }
 
+/// <summary>
+/// used to check the input validity
+/// </summary>
 bool computer::is_valid_input(short int c, short int r){
     if(c > 7 || r > 7 || c < 0 || r < 0){
         return false;
@@ -71,7 +83,11 @@ bool computer::is_valid_input(short int c, short int r){
     }
 }
 
+/// <summary>
+/// used to make the computer's move
+/// </summary>
 std::string computer::move(string s, bool isCheck) {
+    std::srand(time(0));
     bool done = false;
     int trials = 0;
     short int printCol=-1, printRow=-1;

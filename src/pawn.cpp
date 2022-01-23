@@ -8,6 +8,9 @@ pawn::pawn(char name, short int c, short int r) : piece(name, c, r){}
 
 pawn::pawn(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
+/// <summary>
+/// used to find a possible eat move
+/// </summary>
 vector<short int> pawn::eatE_move(){
     short int ec;
     short int er;
@@ -24,6 +27,9 @@ vector<short int> pawn::eatE_move(){
     return v;
 }
 
+/// <summary>
+/// used to find a possible eat move
+/// </summary>
 vector<short int> pawn::eatW_move(){
     short int ec;
     short int er;
@@ -39,6 +45,10 @@ vector<short int> pawn::eatW_move(){
     v.push_back(er);
     return v;
 }
+
+/// <summary>
+/// used to find a possible en passant move
+/// </summary>
 vector<short int> pawn::en_passantE_move(){
     short int ec;
     short int er;
@@ -55,6 +65,9 @@ vector<short int> pawn::en_passantE_move(){
     return v;
 }
 
+/// <summary>
+/// used to find a possible en passant move
+/// </summary>
 vector<short int> pawn::en_passantW_move(){
     short int ec;
     short int er;
@@ -70,6 +83,10 @@ vector<short int> pawn::en_passantW_move(){
     v.push_back(er);
     return v;
 }
+
+/// <summary>
+/// used to find a possible step move
+/// </summary>
 vector<short int> pawn::step_move(){
     short int r = 1 + rand()%2;
     short int ec, er;
@@ -86,6 +103,9 @@ vector<short int> pawn::step_move(){
     return v;
 }
 
+/// <summary>
+/// used to check a movement final position for the specified piece (pawn in this case)
+/// </summary>
 bool pawn::is_valid_final_pos(short int c, short int r){
     if(c < 0 || c > 7 || r < 0 || r > 7){
         return false;

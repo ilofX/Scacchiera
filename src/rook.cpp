@@ -8,6 +8,9 @@ rook::rook(char name, short int c, short int r) : piece(name, c, r){}
 
 rook::rook(char name, short int c, short int r, int m, int lm) : piece(name, c, r, m, lm){}
 
+/// <summary>
+/// used to find a possible north move
+/// </summary>
 vector<short int> rook::n_move(){
     short int r = std::rand()%7;
     short int ec = get_column();
@@ -18,6 +21,9 @@ vector<short int> rook::n_move(){
     return v;
 }
 
+/// <summary>
+/// used to find a possible est move
+/// </summary>
 vector<short int> rook::e_move(){
     short int r = std::rand()%7;
     short int ec = get_column() + r;
@@ -28,6 +34,9 @@ vector<short int> rook::e_move(){
     return v;
 }
 
+/// <summary>
+/// used to find a possible south move
+/// </summary>
 vector<short int> rook::s_move(){
     short int r = std::rand()%7;
     short int ec = get_column();
@@ -38,6 +47,9 @@ vector<short int> rook::s_move(){
     return v;
 }
 
+/// <summary>
+/// used to find a possible west move
+/// </summary>
 vector<short int> rook::w_move(){
     short int r = std::rand()%7;
     short int ec = get_column() - r;
@@ -48,6 +60,9 @@ vector<short int> rook::w_move(){
     return v;
 }
 
+/// <summary>
+/// used to check a movement final position for the specified piece (rook in this case)
+/// </summary>
 bool rook::is_valid_final_pos(short int c, short int r){
     if(c < 0 || c > 7 || r < 0 || r > 7){
         return false;

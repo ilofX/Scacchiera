@@ -13,6 +13,9 @@ player::player(char n, board& t) : color{n},scacchiera{t} {
 	}
 }
 
+/// <summary>
+/// used to get the player color or team
+/// </summary>
 char player::get_color(){
 	return color;
 }

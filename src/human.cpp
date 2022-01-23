@@ -7,6 +7,9 @@
 
 human::human(char n, board& t) : player(n, t){}
 
+/// <summary>
+/// used to make the human's move
+/// </summary>
 std::string human::move(string s, bool isCheck){
     if(is_display_input(s)){
         std::cout << scacchiera.print() << std::endl;
@@ -25,6 +28,9 @@ std::string human::move(string s, bool isCheck){
 	}
 }
 
+/// <summary>
+/// used to convert the string input into 4 short int value
+/// </summary>
 vector<short int> human::convert_input(string s){
 	vector<short int> ret;
 
@@ -37,6 +43,9 @@ vector<short int> human::convert_input(string s){
 	return ret;
 }
 
+/// <summary>
+/// used to check the input validity
+/// </summary>
 bool human::is_valid_input(string s){
 	if(s.length() == 5 && s[2] == ' ' && tolower((int)s[0]) >= 97 && tolower((int)s[0]) <= 104 && s[1] >= 49 && s[1] <= 56 && tolower((int)s[3]) >= 96 && tolower((int)s[3]) <= 104 && s[4] >= 49 && s[4] <= 56){
 		return true;
@@ -45,6 +54,9 @@ bool human::is_valid_input(string s){
 	}
 }
 
+/// <summary>
+/// used to check if the input string is 'xx xx' or 'XX XX' displays input strings
+/// </summary>
 bool human::is_display_input(string s){
 	string s1 = "XX XX";
 	string s2 = "xx xx";
@@ -55,7 +67,9 @@ bool human::is_display_input(string s){
 	}
 }
 
-
+/// <summary>
+/// used to know if the player is human or computer
+/// </summary>
 bool human::is_human(){
 	return true;
 }
